@@ -3,6 +3,9 @@ import { ThemeProvider } from "@mui/material";
 import { theme } from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
 import { CacheProvider } from "@emotion/react";
+import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { SessionContextProvider } from '@supabase/auth-helpers-react'
+import { useState } from "react";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -11,10 +14,18 @@ function MyApp({
  emotionCache = clientSideEmotionCache,
  pageProps,
 }) {
+
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient())
+
  return (
    <CacheProvider value={emotionCache}>
      <ThemeProvider theme={theme}>
+     <SessionContextProvider
+      supabaseClient={supabaseClient}
+      initialSession={pageProps.initialSession}
+    >
        <Component {...pageProps} />
+    </SessionContextProvider>
      </ThemeProvider>
    </CacheProvider>
  );

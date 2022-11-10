@@ -1,11 +1,12 @@
 import { Box } from '@mui/material'
 import React from 'react'
 import Link from "next/link"
+import Styles from "../styles/header.module.css"
 
 const Header = () => {
   return (
-    <Box>
-        <Box>
+    <Box className={Styles.mainBox}>
+        <Box className={Styles.headerButtons}>
             <Link href={"signup"}>
                 Signup
             </Link>

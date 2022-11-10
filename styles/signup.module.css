@@ -4,8 +4,7 @@
     justify-content: center;
 }
 
-
-.loginForm {
+.sigupForm {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -14,9 +13,21 @@
     margin-top: 20px;
 }
 
-.passwordTage {
+
+.firstName {
+}
+
+.sigupForm_passwordTage {
     display: flex;
     flex-direction: row;
     align-items: center;
-    column-gap: 20px;
+    column-gap: 10px;
+}
+
+
+.sigupForm_confirmPasswordTage {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;    
 }
