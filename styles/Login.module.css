@@ -12,6 +12,16 @@
     row-gap: 20px;
     align-self: center;
     margin-top: 20px;
+    width: 35%;
+}
+
+.loginTitle {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.passwordTag {
+    width: 100%;
 }
 
 .passwordTage {
@@ -19,4 +29,22 @@
     flex-direction: row;
     align-items: center;
     column-gap: 20px;
+}
+
+.errorMsg {
+    color: red;
+    font-size: 15px;
+    text-align: center;
+}
+
+
+.signupLink {
+    font-size: 15px;
+    text-align: center;
+}
+
+.signupSpan:hover{
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
 }

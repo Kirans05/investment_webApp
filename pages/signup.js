@@ -15,23 +15,14 @@ import React, { useState } from "react";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Styles from "../styles/signup.module.css";
-import Header from "../components/Header"
-// import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
-import supabase from "../src/Config/supaBaseClient"
+import Header from "../components/Header";
+import supabase from "../src/Config/supaBaseClient";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-
-
+import { useRouter } from "next/router";
 
 const signup = () => {
-
-  // const supabase = useSupabaseClient()
-  // console.log(supabase)
-
-  const session = useSession()
-  console.log("signup session", session)
-  const supabase = useSupabaseClient()
-  console.log("signup supabase", supabase)
-
+  const supabase = useSupabaseClient();
+  const router = useRouter();
 
   const [inputValues, setInputValues] = useState({
     phoneNumber: "",
@@ -44,67 +35,66 @@ const signup = () => {
 
   const [password, setPassword] = useState(true);
   const [confirmPassword, setConfirmPassword] = useState(true);
-  const [errorMsg, setErrorMsg] = useState("")
+  const [errorMsg, setErrorMsg] = useState("");
 
   const inputChangeHandler = (e) => {
     setInputValues({ ...inputValues, [e.target.name]: e.target.value });
   };
 
-
-  // const submitHandler = async () => {
-
-  //   if(inputValues.phoneNumber == "" || inputValues.password == "" || inputValues.confirmpassword == "" || inputValues.email == "" || inputValues.firstName == "" || inputValues.lastName == ""){
-  //     setErrorMsg("Please Fill All The Feilds")
-  //     return
-  //   }
-
-  //   if(inputValues.password != inputValues.confirmpassword){
-  //     setErrorMsg("Password Doesn't match")
-  //     return
-  //   }
-
-  //   const {data, error} = await supabase
-  //           .auth
-  //           .signUp(
-  //             {firstName:inputValues.firstName, lastName : inputValues.lastName, phoneNUmber:inputValues.phoneNumber, password : inputValues.password}
-  //             )
-  //       // .from("users")
-  //       // .insert([
-  //       //   {firstName:inputValues.firstName, lastName : inputValues.lastName, phoneNUmber:inputValues.phoneNumber, password : inputValues.password}
-  //       // ])
-  //       // .select()
-
-  //   console.log("data", data)
-  //   console.log("error", error)
-
-  //   if(error){
-  //     console.log("e",error)
-  //   }
-
-  //   if(data){
-  //     console.log("d",data)
-  //   }
-
-  // }
-
-
   const submitHandler = async () => {
+    if (
+      inputValues.phoneNumber == "" ||
+      inputValues.email == "" ||
+      inputValues.password == "" ||
+      inputValues.confirmpassword == "" ||
+      inputValues.firstName == "" ||
+      inputValues.lastName == ""
+    ) {
+      setErrorMsg("Please Fill All The Feilds");
+      setTimeout(() => {
+        setErrorMsg("");
+      }, 4000);
+      return;
+    }
+
+    if (inputValues.password != inputValues.confirmpassword) {
+      setErrorMsg("Passwors Does not Match");
+      setTimeout(() => {
+        setErrorMsg("");
+      }, 4000);
+      return;
+    }
+
     const { data, error } = await supabase.auth.signUp({
       email: inputValues.email,
       password: inputValues.password,
-    })
+    });
 
-    console.log("data",data )
-    console.log("error", error)
-    console.log("session- 99", session)
+    if (error) {
+      setErrorMsg("Password should be atleast 6 characters");
+      setTimeout(() => {
+        setErrorMsg("");
+      }, 4000);
+      return;
+    }
 
+    if (data.session == null) {
+      setErrorMsg("Please Check your Email for Confimation link");
+      setTimeout(() => {
+        setErrorMsg("");
+      }, 4000);
+      return;
+    }
+  };
 
-  }
+  const loginPageNavigator = () => {
+    router.push("login");
+  };
 
   return (
     <Box className={Styles.mainBox}>
-      <Header />
       <Box className={Styles.sigupForm}>
+        <Typography className={Styles.signupTitle}>Sign Up</Typography>
         <TextField
           className={Styles.firstName}
           id="outlined-basic"
@@ -148,8 +138,12 @@ const signup = () => {
             name="password"
             value={inputValues.password}
             type={password ? "password" : "text"}
+            className={Styles.passwordTage}
           />
-          <Box onClick={() => setPassword(!password)} sx={{"&:hover":{cursor:"pointer"}}}>
+          <Box
+            onClick={() => setPassword(!password)}
+            sx={{ "&:hover": { cursor: "pointer" } }}
+          >
             {password ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}
           </Box>
         </Box>
@@ -162,13 +156,25 @@ const signup = () => {
             name="confirmpassword"
             value={inputValues.confirmpassword}
             type={confirmPassword ? "password" : "text"}
+            className={Styles.passwordTage}
           />
-          <Box onClick={() => setConfirmPassword(!confirmPassword)} sx={{"&:hover":{cursor:"pointer"}}}>
+          <Box
+            onClick={() => setConfirmPassword(!confirmPassword)}
+            sx={{ "&:hover": { cursor: "pointer" } }}
+          >
             {confirmPassword ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}
           </Box>
         </Box>
-        <Button variant="contained" onClick={submitHandler}>Signup</Button>
-        <Typography>{errorMsg}</Typography>
+        <Button variant="contained" onClick={submitHandler}>
+          Signup
+        </Button>
+        <Typography className={Styles.loginLink}>
+          Already have an acoount{" "}
+          <span className={Styles.loginSpan} onClick={loginPageNavigator}>
+            Login
+          </span>
+        </Typography>
+        <Typography className={Styles.errorMsg}>{errorMsg}</Typography>
       </Box>
     </Box>
   );

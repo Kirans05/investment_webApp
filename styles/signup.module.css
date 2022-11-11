@@ -4,6 +4,12 @@
     justify-content: center;
 }
 
+.signupTitle {
+    color: black;
+    font-weight: bold;
+    font-size: 25px;
+}
+
 .sigupForm {
     display: flex;
     flex-direction: column;
@@ -11,17 +17,21 @@
     row-gap: 20px;
     align-self: center;
     margin-top: 20px;
+    width: 35%;
 }
 
-
-.firstName {
-}
 
 .sigupForm_passwordTage {
     display: flex;
     flex-direction: row;
     align-items: center;
     column-gap: 10px;
+    width: 100%;
+}
+
+
+.passwordTage {
+    width: 100%;
 }
 
 
@@ -30,4 +40,23 @@
     flex-direction: row;
     align-items: center;
     column-gap: 10px;    
+}
+
+
+.errorMsg {
+    color: red;
+    font-size: 15px;
+    text-align: center;
+}
+
+.loginLink {
+    color: black;
+    font-size: 15px;
+    text-align: center;
+}
+
+.loginSpan:hover {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
 }
