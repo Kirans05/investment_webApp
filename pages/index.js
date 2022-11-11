@@ -12,18 +12,19 @@ const index = () => {
 
   const session = useSession()
   const supabase = useSupabaseClient()
+  console.log("session", session)
 
   return (
-    <div className="container" style={{ padding: '50px 0 100px 0' }}>
-      {!session ? (
-        <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} theme="dark" providers={["google", "facebook"]}/>
-      ) : (
-        <Account  session={session}/>
-      )}
-    </div>
-    // <Box>
-    //   <Header />
-    // </Box>
+    // <div className="container" style={{ padding: '50px 0 100px 0' }}>
+    //   {!session ? (
+    //     <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} theme="dark" providers={["google", "facebook"]}/>
+    //   ) : (
+    //     <Account  session={session}/>
+    //   )}
+    // </div>
+    <Box >
+      <Header />
+    </Box>
   )
 }
 

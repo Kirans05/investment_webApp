@@ -8,10 +8,10 @@ const Header = () => {
     <Box className={Styles.mainBox}>
         <Box className={Styles.headerButtons}>
             <Link href={"signup"}>
-                Signup
+                <h1 className={Styles.h1}>Signup</h1>
             </Link>
             <Link href={"login"}>
-                Login
+            <h1 className={Styles.h1}>Login</h1>
             </Link>
         </Box>
     </Box>
