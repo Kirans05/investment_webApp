@@ -19,6 +19,29 @@ import Header from "../components/Header";
 import supabase from "../src/Config/supaBaseClient";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
+import Lottie from "react-lottie";
+import Animation from "../src/Lotties/system-lottie.json.json";
+
+
+const SplitText = (props) => {
+  return(
+          <span aria-label={props.copy} role={props.role} className={Styles.span1}>
+              {props.copy.split("").map(function(char, index){
+                let style = {"animation-delay": (0.5 + index / 10) + "s"}
+                return <span
+                className={Styles.span2}
+                  aria-hidden="true"
+                  key={index}
+                  style={style}>
+                  {char}
+                </span>;
+              })}
+            </span>
+        );
+      }
+
+
+
 
 const signup = () => {
   const supabase = useSupabaseClient();
@@ -91,10 +114,36 @@ const signup = () => {
     router.push("login");
   };
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: Animation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
+ 
+
   return (
     <Box className={Styles.mainBox}>
+      <Box className={Styles.lottieBox}>
+        <Box>
+          <Typography className={Styles.signupLottieTitle}>Sign Up</Typography>
+          <Typography className={Styles.loginOption}>
+            if you already have an acoount
+          </Typography>
+          <Typography className={Styles.loginOption}>
+            you can{" "}
+            <span className={Styles.loginButton} onClick={loginPageNavigator}>
+              Login here !
+            </span>
+          </Typography>
+        </Box>
+        <Lottie options={defaultOptions} height={400} width={400} />
+      </Box>
       <Box className={Styles.sigupForm}>
-        <Typography className={Styles.signupTitle}>Sign Up</Typography>
+        <Typography className={Styles.SignupTitleAnimation}><SplitText copy="Sign Up" role="heading" /></Typography>
         <TextField
           className={Styles.firstName}
           id="outlined-basic"
@@ -168,12 +217,6 @@ const signup = () => {
         <Button variant="contained" onClick={submitHandler}>
           Signup
         </Button>
-        <Typography className={Styles.loginLink}>
-          Already have an acoount{" "}
-          <span className={Styles.loginSpan} onClick={loginPageNavigator}>
-            Login
-          </span>
-        </Typography>
         <Typography className={Styles.errorMsg}>{errorMsg}</Typography>
       </Box>
     </Box>

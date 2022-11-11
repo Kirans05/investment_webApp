@@ -6,6 +6,30 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
+import Lottie from "react-lottie";
+import Animation from "../src/Lotties/system-lottie.json.json";
+
+
+
+const SplitText = (props) => {
+  return(
+          <span aria-label={props.copy} role={props.role} className={Styles.span1}>
+              {props.copy.split("").map(function(char, index){
+                let style = {"animation-delay": (0.5 + index / 10) + "s"}
+                return <span
+                className={Styles.span2}
+                  aria-hidden="true"
+                  key={index}
+                  style={style}>
+                  {char}
+                </span>;
+              })}
+            </span>
+        );
+      }
+
+
+
 
 const login = () => {
   const router = useRouter();
@@ -55,10 +79,34 @@ const login = () => {
     router.push("signup")
   }
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: Animation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   return (
     <Box className={Styles.mainBox}>
+       <Box className={Styles.lottieBox}>
+        <Box>
+          <Typography className={Styles.loginLottieTitle}>Login</Typography>
+          <Typography className={Styles.signupOption}>if you don't have an acoount</Typography>
+          <Typography className={Styles.signupOption}>you can <span className={Styles.signupButton}
+          onClick={singupPageNavigator}
+          >Register here !</span></Typography>
+        </Box>
+      <Lottie 
+	    options={defaultOptions}
+        height={400}
+        width={400}
+      />
+    </Box>
       <Box className={Styles.loginForm}>
-        <Typography className={Styles.loginTitle}>Login</Typography>
+        <Typography className={Styles.loginTitleAnimation}><SplitText copy="Login" role="heading" /></Typography>
+
         <TextField
           id="outlined-basic"
           label="email"

@@ -1,13 +1,21 @@
 .mainBox {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 95vh;
+}
+
+.signupLottieTitle {
+    font-size: 35px;
+    font-weight: 700;
 }
 
 .signupTitle {
     color: black;
     font-weight: bold;
     font-size: 25px;
+    height: 35px;
 }
 
 .sigupForm {
@@ -18,6 +26,8 @@
     align-self: center;
     margin-top: 20px;
     width: 35%;
+    padding: 1% 3%;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 
@@ -60,3 +70,58 @@
     color: blue;
     text-decoration: underline;
 }
+
+.lottieBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+
+.loginOption {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.loginButton {
+    color: blue;
+}
+
+.loginButton:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+
+.SignupTitleAnimation {
+    font-size: 25px;
+    text-align: start;
+    font-weight: bold;
+    color: #130301;
+  }
+
+.SignupTitleAnimation .span1 .span2 {
+    position: relative;
+    animation: move-text-color 0.75s forwards;
+    bottom: -1em;
+    opacity: 0;
+  }
+
+  @keyframes move-text-color {
+    0% {
+      bottom: -0.2em;
+      opacity: 1;
+      color: #3E5C76;
+    }
+    
+    50% {
+      bottom: 0.2em;
+      color: #EC058E;
+    }
+  
+    100% {
+      bottom: 0;
+      opacity: 1;
+      color: #110201;
+    }
+  }

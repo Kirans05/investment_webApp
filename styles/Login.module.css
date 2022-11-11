@@ -1,7 +1,9 @@
 .mainBox {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 90vh;
 }
 
 
@@ -13,7 +15,10 @@
     align-self: center;
     margin-top: 20px;
     width: 35%;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 2% 3%;
 }
+
 
 .loginTitle {
     font-size: 25px;
@@ -48,3 +53,57 @@
     color: blue;
     text-decoration: underline;
 }
+
+.loginLottieTitle {
+    font-size: 35px;
+    font-weight: 700;
+}
+
+.signupOption {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.signupButton {
+    color: blue;
+}
+
+.signupButton:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+
+
+.loginTitleAnimation {
+    font-size: 25px;
+    text-align: start;
+    font-weight: bold;
+    color: #130301;
+  }
+
+.loginTitleAnimation .span1 .span2 {
+    position: relative;
+    animation: move-text-color 0.75s forwards;
+    bottom: -1em;
+    opacity: 0;
+  }
+
+  @keyframes move-text-color {
+    0% {
+      bottom: -0.2em;
+      opacity: 1;
+      color: #3E5C76;
+    }
+    
+    50% {
+      bottom: 0.2em;
+      color: #EC058E;
+    }
+  
+    100% {
+      bottom: 0;
+      opacity: 1;
+      color: #110201;
+    }
+  }
