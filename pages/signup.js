@@ -20,7 +20,7 @@ import supabase from "../src/Config/supaBaseClient";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import Lottie from "react-lottie";
-import Animation from "../src/Lotties/system-lottie.json.json";
+import Animation from "../src/Lotties/signup-lottie.json";
 
 
 const SplitText = (props) => {
@@ -38,7 +38,7 @@ const SplitText = (props) => {
               })}
             </span>
         );
-      }
+}
 
 
 

@@ -7,8 +7,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import Lottie from "react-lottie";
-import Animation from "../src/Lotties/system-lottie.json.json";
-
+import Animation from "../src/Lotties/login-lottie.json.json";
+import Typical from "react-typical"
 
 
 const SplitText = (props) => {
@@ -136,11 +136,22 @@ const login = () => {
         <Button variant="contained" onClick={submitHandler}>
           Login
         </Button>
-        <Typography className={Styles.signupLink}>
-          Don't have an account? <span className={Styles.signupSpan}
-          onClick={singupPageNavigator}
-          >Sign up</span>
-        </Typography>
+        {/* <Box>
+        <Typical
+                steps={[
+                  'Cakes',
+                  2000,
+                  'Pies',
+                  2000,
+                  'Biscuits',
+                  2000,
+                  'Scones',
+                  2000,
+                ]}
+                wrapper="p"
+                loop={Infinity}
+                />
+          </Box> */}
         <Typography className={Styles.errorMsg}>{errorMsg}</Typography>
       </Box>
     </Box>
