@@ -152,6 +152,12 @@ const login = () => {
                 loop={Infinity}
                 />
           </Box> */}
+           <Box className={Styles.smallScreenSignupButton}>
+          <Typography className={Styles.signupOption}>if you don't have an acoount</Typography>
+          <Typography className={Styles.signupOption}>you can <span className={Styles.signupButton}
+          onClick={singupPageNavigator}
+          >Register here !</span></Typography>
+        </Box>
         <Typography className={Styles.errorMsg}>{errorMsg}</Typography>
       </Box>
     </Box>

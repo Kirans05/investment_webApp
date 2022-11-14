@@ -3,7 +3,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    height: 95vh;
+    /* height: 105vh; */
 }
 
 .signupLottieTitle {
@@ -58,6 +58,8 @@
     color: red;
     font-size: 15px;
     text-align: center;
+    display: block;
+    height: 20px;
 }
 
 .loginLink {
@@ -126,3 +128,53 @@
       color: #110201;
     }
   }
+
+
+@media (min-width:0px) and (max-width:480px){
+    .lottieBox {
+        display: none;
+    }
+
+    .sigupForm {
+        width: 80%;
+        padding: 5% 4%;
+    }
+
+    .smallScreenLoginButton {
+        text-align: end;
+    }
+
+    .errorMsg {
+        color: red;
+        font-size: 15px;
+        text-align: center;
+        display: block;
+    }
+}
+
+@media (min-width:481px) and (max-width:768px){
+   .smallScreenLoginButton {
+    display: none;
+
+   }
+
+   .errorMsg {
+    display: block;
+    color: red;
+    font-size: 15px;
+    text-align: center;
+}
+}
+
+@media (min-width:769px) {
+    .smallScreenLoginButton {
+        display: none;
+       }
+
+       .errorMsg {
+        display: block;
+        color: red;
+        font-size: 15px;
+        text-align: center;
+    }
+}

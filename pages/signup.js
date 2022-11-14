@@ -65,6 +65,7 @@ const signup = () => {
   };
 
   const submitHandler = async () => {
+
     if (
       inputValues.phoneNumber == "" ||
       inputValues.email == "" ||
@@ -217,6 +218,17 @@ const signup = () => {
         <Button variant="contained" onClick={submitHandler}>
           Signup
         </Button>
+        <Box className={Styles.smallScreenLoginButton}>
+        <Typography className={Styles.loginOption}>
+            if you already have an acoount
+          </Typography>
+          <Typography className={Styles.loginOption}>
+            you can{" "}
+            <span className={Styles.loginButton} onClick={loginPageNavigator}>
+              Login here !
+            </span>
+          </Typography>
+      </Box>
         <Typography className={Styles.errorMsg}>{errorMsg}</Typography>
       </Box>
     </Box>
