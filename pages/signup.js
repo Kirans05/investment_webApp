@@ -44,7 +44,7 @@ const SplitText = (props) => {
 
 
 const signup = () => {
-  const supabase = useSupabaseClient();
+  // const supabase = useSupabaseClient();
   const router = useRouter();
 
   const [inputValues, setInputValues] = useState({

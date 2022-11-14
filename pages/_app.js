@@ -34,6 +34,7 @@
 // export default MyApp;
 
 
+import supabase from "../src/Config/supaBaseClient"
 import { ThemeProvider } from "@mui/material";
 import { theme } from "../src/theme";
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'

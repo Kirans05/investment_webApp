@@ -1,4 +1,4 @@
-import supabase  from "../src/Config/supaBaseClient";
+// import supabase  from "../src/Config/supaBaseClient";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Box, Typography } from '@mui/material';

@@ -1,3 +1,4 @@
+import supabase from "../src/Config/supaBaseClient";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import Header from "../components/Header";
@@ -33,7 +34,7 @@ const SplitText = (props) => {
 
 const login = () => {
   const router = useRouter();
-  const supabase = useSupabaseClient();
+  // const supabase = useSupabaseClient();
 
   const [inputValues, setInputValues] = useState({
     password: "",
