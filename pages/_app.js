@@ -51,7 +51,6 @@ function MyApp({ Component, pageProps }) {
       supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}
     >
-
   <Component {...pageProps} />
     </SessionContextProvider>
   </ThemeProvider>
