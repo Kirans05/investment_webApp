@@ -63,14 +63,58 @@ const Dashboard = ({ session }) => {
     // .rpc('obj')
     //   console.log(data)
     // }
-    let data = await supabase.rpc("obj");
-    console.log(data);
+    // let data = await supabase.rpc("obj");
+    // console.log(data);
     //   let data = await supabase
     // .rpc('data_update', {
     //   amount:inputValues
     // })
     //   console.log(data)
     // }
+
+    let val = {
+      from:"kiran",
+      to:"manoj",
+      message:"simply",
+      type:"credit"
+    }
+    let arr =[{
+      "sub_id": 1,
+      "sub_name": "Computer Architecture",
+      "sub_marks": 130
+     },
+     {
+      "sub_id": 2,
+      "sub_name": "Operating Systems",
+      "sub_marks": 120
+     
+     }]
+
+  //   const data = await supabase
+  // .from('profiles')
+  // // .update({ transaction_details: JSON.stringify(val) })
+  // .update({ wallet_balance: 199 })
+  // .eq('id', '77cba4e6-44e0-4965-bfb8-90fe4de716b7')
+
+  // console.log(data)
+  // const datas = await supabase
+  //     .from("profiles")
+  //     .update([{ transaction_details: JSON.stringify(arr) }])
+  //     .eq("id", "f5ad96cd-b006-4fad-bd36-212424a1b115");
+
+  // console.log(datas)
+
+  let data = await supabase
+      .from("profiles")
+      .select()
+
+      console.log(data)
+
+
+  // console.log(val)
+  // console.log(JSON.stringify(val))
+
+
   };
 
   return (
