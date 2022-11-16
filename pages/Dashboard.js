@@ -72,24 +72,15 @@ const Dashboard = ({ session }) => {
     //   console.log(data)
     // }
 
-    let val = {
-      from:"kiran",
-      to:"manoj",
-      message:"simply",
-      type:"credit"
-    }
-    let arr =[{
-      "sub_id": 1,
-      "sub_name": "Computer Architecture",
-      "sub_marks": 130
-     },
-     {
-      "sub_id": 2,
-      "sub_name": "Operating Systems",
-      "sub_marks": 120
-     
-     }]
-
+    let arr = [
+      {
+        "name":"kiran"
+      },
+      {
+        "name":"manoj"
+      }
+    ]
+    // console.log(JSON.stringify(arr))
   //   const data = await supabase
   // .from('profiles')
   // // .update({ transaction_details: JSON.stringify(val) })
@@ -100,15 +91,21 @@ const Dashboard = ({ session }) => {
   // const datas = await supabase
   //     .from("profiles")
   //     .update([{ transaction_details: JSON.stringify(arr) }])
-  //     .eq("id", "f5ad96cd-b006-4fad-bd36-212424a1b115");
+  //     .eq("id", "75e7edac-bd14-4fd7-97f3-962b6369a63c");
 
   // console.log(datas)
 
-  let data = await supabase
-      .from("profiles")
-      .select()
+  let data = await supabase.rpc("updates_data",{
+    details:JSON.stringify(arr)
+  })
 
-      console.log(data)
+  console.log(data)
+     
+  // let data = await supabase
+  //     .from("profiles")
+  //     .select()
+  //     .eq("id","75e7edac-bd14-4fd7-97f3-962b6369a63c")
+  //     console.log(data)
 
 
   // console.log(val)

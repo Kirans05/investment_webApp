@@ -74,7 +74,7 @@ const login = () => {
 
     if (data.session) {
       // localStorage.setItem("invest_userDetails", JSON.stringify(data))
-      router.push("/");
+      router.push("Dashboard");
       // sb-rjbbcbogvcyfgacrosge-auth-token
     }
   };
