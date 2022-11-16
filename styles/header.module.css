@@ -1,25 +1,56 @@
-
-
 .mainBox {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    background-color: black;
-    height: 50px;
+    justify-content: space-between;
     align-items: center;
+    padding: 0px 35px;
+}
+
+.menuIcon:hover {
+    cursor: pointer;
 }
 
 
-.headerButtons {
+.mainBox .leftHeader {
     display: flex;
+    align-items: center;
     flex-direction: row;
-    column-gap: 20px;
-    margin-right: 20px;
-    color: rgb(64, 230, 45);
+    column-gap: 5px;
 }
 
-.h1 {
-    color: red;
-    font-size: 20px;
-    margin: 0px;
+
+.mainBox .rightHeader {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+
+.mainBox .rightHeader .account {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    column-gap: 5px;
+    border: 5px solid white;
+    padding: 10px;
+}
+
+.mainBox .rightHeader .account:hover {
+    border-bottom: 5px solid green ;
+    cursor: pointer;
+}
+
+.drawer {
+    width: 250px;
+    padding-left: 30px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    padding-top: 30px;
+}
+
+
+.drawer .drawerTypograpy:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }

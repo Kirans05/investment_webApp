@@ -1,9 +1,13 @@
 .mainBox {
     display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.signupBox {
+    display: flex;
     flex-direction: row;
     justify-content: space-around;
-    align-items: center;
-    /* height: 105vh; */
 }
 
 .signupLottieTitle {

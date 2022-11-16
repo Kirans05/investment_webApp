@@ -10,15 +10,18 @@ import Dashboard from './Dashboard';
 import {useState, useEffect} from "react"
 
 const index = () => {
-
   const session = useSession()
+  let item
+  // if (typeof window !== 'undefined') {
+  //   item = localStorage.getItem('invest_userDetails')
+  //   item = JSON.parse(item)
+  // }
+  // console.log(item)
+
 
   return (
     <Box >
-      {
-        !session ? <Header />
-        : <Dashboard session={session}/>
-      }
+     <Header />
     </Box>
   )
 }

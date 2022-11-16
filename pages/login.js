@@ -9,28 +9,27 @@ import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import Lottie from "react-lottie";
 import Animation from "../src/Lotties/login-lottie.json.json";
-import Typical from "react-typical"
-
+import Typical from "react-typical";
 
 const SplitText = (props) => {
-  return(
-          <span aria-label={props.copy} role={props.role} className={Styles.span1}>
-              {props.copy.split("").map(function(char, index){
-                let style = {"animation-delay": (0.5 + index / 10) + "s"}
-                return <span
-                className={Styles.span2}
-                  aria-hidden="true"
-                  key={index}
-                  style={style}>
-                  {char}
-                </span>;
-              })}
-            </span>
+  return (
+    <span aria-label={props.copy} role={props.role} className={Styles.span1}>
+      {props.copy.split("").map(function (char, index) {
+        let style = { "animation-delay": 0.5 + index / 10 + "s" };
+        return (
+          <span
+            className={Styles.span2}
+            aria-hidden="true"
+            key={index}
+            style={style}
+          >
+            {char}
+          </span>
         );
-      }
-
-
-
+      })}
+    </span>
+  );
+};
 
 const login = () => {
   const router = useRouter();
@@ -57,11 +56,13 @@ const login = () => {
       return;
     }
 
-
     const { data, error } = await supabase.auth.signInWithPassword({
       email: inputValues.email,
       password: inputValues.password,
     });
+
+    console.log("data", data);
+    console.log("error", error);
 
     if (error) {
       setErrorMsg("Invalid login credentials");
@@ -72,14 +73,15 @@ const login = () => {
     }
 
     if (data.session) {
+      // localStorage.setItem("invest_userDetails", JSON.stringify(data))
       router.push("/");
+      // sb-rjbbcbogvcyfgacrosge-auth-token
     }
   };
 
-
   const singupPageNavigator = () => {
-    router.push("signup")
-  }
+    router.push("signup");
+  };
 
   const defaultOptions = {
     loop: true,
@@ -92,75 +94,76 @@ const login = () => {
 
   return (
     <Box className={Styles.mainBox}>
-       <Box className={Styles.lottieBox}>
-        <Box>
-          <Typography className={Styles.loginLottieTitle}>Login</Typography>
-          <Typography className={Styles.signupOption}>if you don't have an acoount</Typography>
-          <Typography className={Styles.signupOption}>you can <span className={Styles.signupButton}
-          onClick={singupPageNavigator}
-          >Register here !</span></Typography>
+      <Header />
+      <Box className={Styles.loginBox}>
+        <Box className={Styles.lottieBox}>
+          <Box>
+            <Typography className={Styles.loginLottieTitle}>Login</Typography>
+            <Typography className={Styles.signupOption}>
+              if you don't have an acoount
+            </Typography>
+            <Typography className={Styles.signupOption}>
+              you can{" "}
+              <span
+                className={Styles.signupButton}
+                onClick={singupPageNavigator}
+              >
+                Register here !
+              </span>
+            </Typography>
+          </Box>
+          <Lottie options={defaultOptions} height={400} width={400} />
         </Box>
-      <Lottie 
-	    options={defaultOptions}
-        height={400}
-        width={400}
-      />
-    </Box>
-      <Box className={Styles.loginForm}>
-        <Typography className={Styles.loginTitleAnimation}><SplitText copy="Login" role="heading" /></Typography>
+        <Box className={Styles.loginForm}>
+          <Typography className={Styles.loginTitleAnimation}>
+            <SplitText copy="Login" role="heading" />
+          </Typography>
 
-        <TextField
-          id="outlined-basic"
-          label="email"
-          variant="outlined"
-          onChange={inputChangeHandler}
-          name="email"
-          value={inputValues.email}
-        />
-        <Box className={Styles.passwordTage}>
           <TextField
             id="outlined-basic"
-            label="Password"
+            label="email"
             variant="outlined"
             onChange={inputChangeHandler}
-            name="password"
-            value={inputValues.password}
-            type={password ? "password" : "text"}
-            className={Styles.passwordTag}
+            name="email"
+            value={inputValues.email}
           />
-          <Box
-            onClick={() => setPassword(!password)}
-            sx={{ "&:hover": { cursor: "pointer" } }}
-          >
-            {password ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}
+          <Box className={Styles.passwordTage}>
+            <TextField
+              id="outlined-basic"
+              label="Password"
+              variant="outlined"
+              onChange={inputChangeHandler}
+              name="password"
+              value={inputValues.password}
+              type={password ? "password" : "text"}
+              className={Styles.passwordTag}
+            />
+            <Box
+              onClick={() => setPassword(!password)}
+              sx={{ "&:hover": { cursor: "pointer" } }}
+            >
+              {password ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}
+            </Box>
           </Box>
+          <Button variant="contained" onClick={submitHandler}>
+            Login
+          </Button>
+          <Box className={Styles.smallScreenSignupButton}>
+            <Typography className={Styles.signupOption}>
+              if you don't have an acoount
+            </Typography>
+            <Typography className={Styles.signupOption}>
+              you can{" "}
+              <span
+                className={Styles.signupButton}
+                onClick={singupPageNavigator}
+              >
+                Register here !
+              </span>
+            </Typography>
+          </Box>
+          <Typography className={Styles.errorMsg}>{errorMsg}</Typography>
         </Box>
-        <Button variant="contained" onClick={submitHandler}>
-          Login
-        </Button>
-        {/* <Box>
-        <Typical
-                steps={[
-                  'Cakes',
-                  2000,
-                  'Pies',
-                  2000,
-                  'Biscuits',
-                  2000,
-                  'Scones',
-                  2000,
-                ]}
-                wrapper="p"
-                loop={Infinity}
-                />
-          </Box> */}
-           <Box className={Styles.smallScreenSignupButton}>
-          <Typography className={Styles.signupOption}>if you don't have an acoount</Typography>
-          <Typography className={Styles.signupOption}>you can <span className={Styles.signupButton}
-          onClick={singupPageNavigator}
-          >Register here !</span></Typography>
-        </Box>
-        <Typography className={Styles.errorMsg}>{errorMsg}</Typography>
       </Box>
     </Box>
   );

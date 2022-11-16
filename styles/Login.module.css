@@ -1,11 +1,14 @@
 .mainBox {
     display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+.mainBox .loginBox {
+    display: flex;
     flex-direction: row;
     justify-content: space-around;
-    align-items: flex-end;
-    height: 90vh;
-    position: relative;
-    overflow: hidden;
+    align-items: center;
 }
 
 

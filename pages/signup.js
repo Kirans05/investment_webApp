@@ -94,6 +94,9 @@ const signup = () => {
       password: inputValues.password,
     });
 
+    console.log("data", data)
+    console.log("error", error)
+
     if (error) {
       setErrorMsg("Password should be atleast 6 characters");
       setTimeout(() => {
@@ -128,6 +131,8 @@ const signup = () => {
 
   return (
     <Box className={Styles.mainBox}>
+      <Header />
+      <Box className={Styles.signupBox}>
       <Box className={Styles.lottieBox}>
         <Box>
           <Typography className={Styles.signupLottieTitle}>Sign Up</Typography>
@@ -230,6 +235,7 @@ const signup = () => {
           </Typography>
       </Box>
         <Typography className={Styles.errorMsg}>{errorMsg}</Typography>
+      </Box>
       </Box>
     </Box>
   );
