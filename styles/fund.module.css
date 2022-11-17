@@ -1,0 +1,21 @@
+.mainBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 20px;
+}
+
+.mainBox .fundPageBox {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 30%;
+    row-gap: 20px;
+}
+
+
+.mainBox .fundPageBox .errorMsg {
+    color: red;
+    font-size: 15px;
+    text-align: center;
+}

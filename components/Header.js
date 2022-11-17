@@ -64,7 +64,6 @@ const Header = () => {
         <Typography fontSize={fontsize}>Investment App</Typography>
       </Box>
       <Box className={Styles.rightHeader}>
-        <Button variant='contained' onClick={() => router.push("Dashboard")}>DashBoard</Button>
         <Box className={Styles.account}>
             <PermIdentityIcon />
             <Typography fontSize={fontsize} onClick={handleClick}>Account</Typography>
