@@ -33,28 +33,26 @@
 
 // export default MyApp;
 
-
-import supabase from "../src/Config/supaBaseClient"
+import supabase from "../src/Config/supaBaseClient";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "../src/theme";
-import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useState } from "react";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 
-
-
 function MyApp({ Component, pageProps }) {
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
-  const [supabaseClient] = useState(() => createBrowserSupabaseClient())
-
-  return <ThemeProvider theme={theme}>
-    <SessionContextProvider
-      supabaseClient={supabaseClient}
-      initialSession={pageProps.initialSession}
-    >
-  <Component {...pageProps} />
-    </SessionContextProvider>
-  </ThemeProvider>
+  return (
+    <ThemeProvider theme={theme}>
+        <SessionContextProvider
+          supabaseClient={supabaseClient}
+          initialSession={pageProps.initialSession}
+        >
+          <Component {...pageProps} />
+        </SessionContextProvider>
+    </ThemeProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;
