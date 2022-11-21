@@ -15,16 +15,21 @@ const Dashboard = () => {
   const [userDetails, setUserDetails] = useState("")
 
   const kycVerification = async () => {
+    const ISSERVER = typeof window === "undefined";
+    if(!ISSERVER){
     let {user} = JSON.parse(localStorage.getItem("sb-rjbbcbogvcyfgacrosge-auth-token")) 
     const data = await supabase
       .from("profiles")
       .update({ kyc: true })
       .eq("id", user.id);
       console.log(data)
+    }
   };
 
   const fetchUserDetails = async () => {
 
+    const ISSERVER = typeof window === "undefined";
+    if(!ISSERVER){
     const {user} = JSON.parse(localStorage.getItem("sb-rjbbcbogvcyfgacrosge-auth-token"))
 
     let response = await supabase
@@ -35,6 +40,7 @@ const Dashboard = () => {
     
       let {data} = response
       setUserDetails(data)
+    }
   }
 
   useEffect(() => {
