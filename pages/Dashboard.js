@@ -12,7 +12,6 @@ const Dashboard = () => {
     const res = await supabase.auth.signOut();
     router.push("/");
   };
-  const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("sb-rjbbcbogvcyfgacrosge-auth-token")))
   const [userDetails, setUserDetails] = useState("")
 
   const kycVerification = async () => {
@@ -25,10 +24,13 @@ const Dashboard = () => {
   };
 
   const fetchUserDetails = async () => {
+
+    const {user} = JSON.parse(localStorage.getItem("sb-rjbbcbogvcyfgacrosge-auth-token"))
+
     let response = await supabase
         .from("profiles")
         .select("*")
-        .eq("id",userData.user.id)
+        .eq("id",user.id)
         .single()
     
       let {data} = response
