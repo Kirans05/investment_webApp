@@ -1,11 +1,13 @@
 import { Button, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Header from "../components/Header";
 import supabase from "../src/Config/supaBaseClient";
 import Styles from "../styles/fund.module.css"
 
 const Fund = () => {
+  const router = useRouter()
   const [inputValues, setInputValues] = useState({
     type: "credit",
     from: "",
@@ -30,14 +32,25 @@ const Fund = () => {
 
     inputValues.date = new Date().toLocaleString();
 
-    const data = await supabase.rpc(
+    const response = await supabase.rpc(
       "update_wallet_balance_and_transaction_details",
       {
         amount: inputValues.amount,
         details: JSON.stringify(inputValues),
       }
     );
-    console.log(data);
+      let {data, error} = response 
+      if(error != null){
+        alert("error while adding fund")
+        return
+      }
+
+      if(data == true){
+        alert("successfully added fund to wallet")
+        router.push("Dashboard")
+        return
+      }
+
   };
 
   return (

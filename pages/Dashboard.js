@@ -12,6 +12,8 @@ const Dashboard = () => {
     const res = await supabase.auth.signOut();
     router.push("/");
   };
+  const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("sb-rjbbcbogvcyfgacrosge-auth-token")))
+  const [userDetails, setUserDetails] = useState("")
 
   const kycVerification = async () => {
     let {user} = JSON.parse(localStorage.getItem("sb-rjbbcbogvcyfgacrosge-auth-token")) 
@@ -22,12 +24,30 @@ const Dashboard = () => {
       console.log(data)
   };
 
+  const fetchUserDetails = async () => {
+    let response = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id",userData.user.id)
+        .single()
+    
+      let {data} = response
+      setUserDetails(data)
+  }
+
+  useEffect(() => {
+    fetchUserDetails()
+  },[])
+
   return (
     <Box className={Styles.mainBox}>
       <Header />
       <Box className={Styles.dashboardMainBox}>
         <Typography>welcome to dashboard</Typography>
-        <Button variant="contained" onClick={kycVerification}>
+        <Typography>Wallet Balance - {userDetails == "" ? 0 : userDetails.wallet_balance}</Typography>
+        <Button variant="contained" onClick={kycVerification}
+        sx={{display:userDetails == "" ? "flex": userDetails.kyc == true ? "none" : "flex"}}
+        >
           KYC Verification
         </Button>
         <Button variant="contained" onClick={signOut}>
