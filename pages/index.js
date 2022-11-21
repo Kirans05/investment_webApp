@@ -5,7 +5,6 @@ import { Box, Typography } from '@mui/material';
 import Link from "next/link"
 import Header from '../components/Header';
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
-import Account from '../components/Accounts';
 import Dashboard from './Dashboard';
 import {useState, useEffect} from "react"
 
