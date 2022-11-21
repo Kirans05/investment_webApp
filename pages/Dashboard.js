@@ -13,25 +13,18 @@ const Dashboard = () => {
     router.push("/");
   };
   const [userDetails, setUserDetails] = useState("")
+  const [userId, setUserId] = useState("")
+  const [rerender, setRerender] = useState(true)
 
   const kycVerification = async () => {
-    const ISSERVER = typeof window === "undefined";
-    if(!ISSERVER){
-    let {user} = JSON.parse(localStorage.getItem("sb-rjbbcbogvcyfgacrosge-auth-token")) 
     const data = await supabase
       .from("profiles")
       .update({ kyc: true })
-      .eq("id", user.id);
-      console.log(data)
-    }
+      .eq("id", userId);
+      setRerender(!rerender)
   };
 
-  const fetchUserDetails = async () => {
-
-    const ISSERVER = typeof window === "undefined";
-    if(!ISSERVER){
-    const {user} = JSON.parse(localStorage.getItem("sb-rjbbcbogvcyfgacrosge-auth-token"))
-
+  const fetchUserDetails = async (user) => {
     let response = await supabase
         .from("profiles")
         .select("*")
@@ -40,12 +33,13 @@ const Dashboard = () => {
     
       let {data} = response
       setUserDetails(data)
-    }
   }
 
   useEffect(() => {
-    fetchUserDetails()
-  },[])
+    const {user} = JSON.parse(localStorage.getItem("sb-rjbbcbogvcyfgacrosge-auth-token"))
+    setUserId(user.id)
+    fetchUserDetails(user)
+  },[rerender])
 
   return (
     <Box className={Styles.mainBox}>
@@ -63,6 +57,9 @@ const Dashboard = () => {
         </Button>
         <Button variant="contained" onClick={() => router.push("Fund")}>
           Add Fund
+        </Button>
+        <Button variant="contained" onClick={() => router.push("Transactions")}>
+          Transactions
         </Button>
       </Box>
     </Box>
