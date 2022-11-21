@@ -1,0 +1,34 @@
+.cardMainBox {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    column-gap: 20px;
+}
+
+
+/* declare
+  balance int;
+  obj jsonb;
+begin
+  select wallet_balance,transaction_details
+  into balance,obj
+  from public.profiles
+  where id = auth.uid();
+  -- update balance
+  balance = balance + amount;
+
+  update public.profiles
+  set wallet_balance = balance
+  where id = auth.uid();
+
+  update public.profiles
+  set transaction_details = obj || details
+  where id = auth.uid();
+
+  return true;
+  
+end; */
+
+
+
+/* '["{\"type\":\"\",\"from\":\"\",\"to\":\"\",\"message\":\"\",\"amount\":\"\",\"date\":\"\"}"]'::jsonb */
