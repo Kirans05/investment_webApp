@@ -36,7 +36,7 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    const {user} = JSON.parse(localStorage.getItem("sb-rjbbcbogvcyfgacrosge-auth-token"))
+    const {user} = JSON.parse(localStorage.getItem("sb-ivqyhkrrmmqfmucmqwgr-auth-token"))
     setUserId(user.id)
     fetchUserDetails(user)
   },[rerender])
@@ -46,12 +46,12 @@ const Dashboard = () => {
       <Header />
       <Box className={Styles.dashboardMainBox}>
         <Typography>welcome to dashboard</Typography>
-        <Typography>Wallet Balance - {userDetails == "" ? 0 : userDetails.wallet_balance}</Typography>
-        <Button variant="contained" onClick={kycVerification}
+        {/* <Typography>Wallet Balance - {userDetails == "" ? 0 : userDetails.wallet_balance}</Typography> */}
+        {/* <Button variant="contained" onClick={kycVerification}
         sx={{display:userDetails == "" ? "flex": userDetails.kyc == true ? "none" : "flex"}}
         >
           KYC Verification
-        </Button>
+        </Button> */}
         <Button variant="contained" onClick={signOut}>
           signout
         </Button>
@@ -100,6 +100,28 @@ export default Dashboard;
 //   update public.profiles
 //   set wallet_balance = balance
 //   where id = auth.uid();
+
+//   return balance;
+
+// end;
+
+
+// // declare
+// //   balance int;
+// // begin
+//   select wallet_balance
+//   into balance
+//   from public.profiles
+//   where id = auth.uid();
+
+// //   balance = balance + amount;
+
+//   update public.profiles
+//   set wallet_balance = balance
+//   where id = auth.uid();
+
+  // insert into public.profiles(id,amount,sender,receiver,date,message,type)
+  // values(id,amount,sender,receiver,date,message,type);
 
 //   return balance;
 

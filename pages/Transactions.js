@@ -10,7 +10,7 @@ const Transactions = () => {
     const [transactionData, setTransactionData] = useState([])
 
     const fetchTransactionData = async () => {
-        let {user} = JSON.parse(localStorage.getItem("sb-rjbbcbogvcyfgacrosge-auth-token"))
+        let {user} = JSON.parse(localStorage.getItem("sb-ivqyhkrrmmqfmucmqwgr-auth-token"))
 
         let response = await supabase
                 .from("profiles")
@@ -70,3 +70,12 @@ const Transactions = () => {
 }
 
 export default Transactions
+
+
+
+// begin
+//   insert into public.transaction(id,amount,sender,receivermessage,type)
+//   values(id,amount,sender,receiver,message,type);
+
+//   return true
+// end;

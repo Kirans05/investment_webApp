@@ -1,0 +1,7 @@
+.coinImageAndName {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 20px;
+}
