@@ -1,8 +1,7 @@
 import { Box, TableCell, TableRow, Typography } from '@mui/material'
 import React from 'react'
 
-const TransactionCard = ({item, Styles}) => {
-    let transactionItem = JSON.parse(item) 
+const TransactionCard = ({item, Styles, index}) => {
   return (
     <TableRow
     hover
@@ -10,14 +9,15 @@ const TransactionCard = ({item, Styles}) => {
   
   "&:hover":{cursor:"pointer"}}}
   >
-    <TableCell align="center">{transactionItem.from}</TableCell>
-    <TableCell align="center">{transactionItem.to}</TableCell>
+    <TableCell align="center">{index+1}</TableCell>
+    <TableCell align="center">{item.sender}</TableCell>
+    <TableCell align="center">{item.receiver}</TableCell>
     <TableCell align='center'>
-    {transactionItem.amount}
+    {item.amount}
     </TableCell>
-    <TableCell align="center">{transactionItem.message}</TableCell>
-    <TableCell align="center">{transactionItem.date}</TableCell>
-    <TableCell align="center">{transactionItem.type}</TableCell>
+    <TableCell align="center">{item.message}</TableCell>
+    <TableCell align="center">{item.created_at}</TableCell>
+    <TableCell align="center">{item.type}</TableCell>
   </TableRow>
   )
 }

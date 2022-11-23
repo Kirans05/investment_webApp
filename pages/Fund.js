@@ -1,13 +1,14 @@
 import { Button, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import supabase from "../src/Config/supaBaseClient";
-import Styles from "../styles/fund.module.css"
+import Styles from "../styles/fund.module.css";
 
 const Fund = () => {
-  const router = useRouter()
+  const router = useRouter();
+  const [userId, setUserId] = useState("");
   const [inputValues, setInputValues] = useState({
     type: "credit",
     from: "",
@@ -22,36 +23,48 @@ const Fund = () => {
   };
 
   const submitHandler = async () => {
-    if(inputValues.from == "" || inputValues.to == "" || inputValues.message == "" || inputValues.amount == ""){
-        setErrorMsg("Please Fill All Feilds")
-        setTimeout(() => {
-            setErrorMsg("")
-        }, 4000)
-        return
+    if (
+      inputValues.from == "" ||
+      inputValues.to == "" ||
+      inputValues.message == "" ||
+      inputValues.amount == ""
+    ) {
+      setErrorMsg("Please Fill All Feilds");
+      setTimeout(() => {
+        setErrorMsg("");
+      }, 4000);
+      return;
     }
-
-    inputValues.date = new Date().toLocaleString();
-
-    const response = await supabase.rpc(
-      "update_wallet_balance_and_transaction_details",
-      {
+    try {
+      let response = await supabase.rpc("update_wallet_balance", {
         amount: inputValues.amount,
-        details: JSON.stringify(inputValues),
+      });
+      if (response.data == true) {
+        try {
+          let resp = await supabase.rpc("update_transaction_details", {
+            amount: inputValues.amount,
+            sender: inputValues.from,
+            receiver: inputValues.to,
+            message: inputValues.message,
+            id: userId,
+            type: "credit",
+          });
+          if(resp.status == 200){
+            alert("Successfully added balance")
+          }else{
+            alert("Internal Server Problem")
+          }
+        } catch (err) {}
       }
-    );
-      let {data, error} = response 
-      if(error != null){
-        alert("error while adding fund")
-        return
-      }
-
-      if(data == true){
-        alert("successfully added fund to wallet")
-        router.push("Dashboard")
-        return
-      }
-
+    } catch (err) {}
   };
+
+  useEffect(() => {
+    let { user } = JSON.parse(
+      localStorage.getItem("sb-ziaxsvytbaahgjrompdd-auth-token")
+    );
+    setUserId(user.id);
+  }, []);
 
   return (
     <Box className={Styles.mainBox}>
@@ -89,7 +102,9 @@ const Fund = () => {
           value={inputValues.message}
           onChange={changeHandler}
         />
-        <Button onClick={submitHandler} variant={"contained"}>Add Money</Button>
+        <Button onClick={submitHandler} variant={"contained"}>
+          Add Money
+        </Button>
         <Typography className={Styles.errorMsg}>{errorMsg}</Typography>
       </Box>
     </Box>

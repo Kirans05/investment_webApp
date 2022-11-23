@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "../components/Header";
 import Styles from "../styles/dashboard.module.css";
+import axios from "axios"
+
 
 const Dashboard = () => {
   const router = useRouter();
@@ -13,16 +15,8 @@ const Dashboard = () => {
     router.push("/");
   };
   const [userDetails, setUserDetails] = useState("")
-  const [userId, setUserId] = useState("")
-  const [rerender, setRerender] = useState(true)
+  const [kycVerified, setKycVerified] = useState(false)
 
-  const kycVerification = async () => {
-    const data = await supabase
-      .from("profiles")
-      .update({ kyc: true })
-      .eq("id", userId);
-      setRerender(!rerender)
-  };
 
   const fetchUserDetails = async (user) => {
     let response = await supabase
@@ -32,26 +26,52 @@ const Dashboard = () => {
         .single()
     
       let {data} = response
+      localStorage.setItem("userData",JSON.stringify(data))
       setUserDetails(data)
   }
 
+  const kycVerification = async (userId) => {
+    let getDetails = {
+      url:"https://637cac1f16c1b892ebbb6fe6.mockapi.io/userData",
+      method:"GET"
+    }
+    let response = await axios(getDetails)
+    let {data} = response
+    let filterItem = data.filter(item => item.userKycId == userId)
+    if(filterItem.length == 0){
+      let postDetails = {
+        url:"https://637cac1f16c1b892ebbb6fe6.mockapi.io/userData",
+        method:"POST",
+        data:{
+          userKycId:userId
+        }
+      }
+      let postResponse = await axios(postDetails)
+      if(postResponse.statusText == "Created"){
+        setKycVerified(true)
+      }else{
+        setKycVerified(false)
+      }
+    }else{
+      setKycVerified(true)
+    }
+  }
+
+
+
   useEffect(() => {
-    const {user} = JSON.parse(localStorage.getItem("sb-ivqyhkrrmmqfmucmqwgr-auth-token"))
-    setUserId(user.id)
+    const {user} = JSON.parse(localStorage.getItem("sb-ziaxsvytbaahgjrompdd-auth-token"))
+    kycVerification(user.id)
     fetchUserDetails(user)
-  },[rerender])
+  },[])
 
   return (
     <Box className={Styles.mainBox}>
       <Header />
       <Box className={Styles.dashboardMainBox}>
         <Typography>welcome to dashboard</Typography>
-        {/* <Typography>Wallet Balance - {userDetails == "" ? 0 : userDetails.wallet_balance}</Typography> */}
-        {/* <Button variant="contained" onClick={kycVerification}
-        sx={{display:userDetails == "" ? "flex": userDetails.kyc == true ? "none" : "flex"}}
-        >
-          KYC Verification
-        </Button> */}
+        <Typography sx={{display:kycVerified == false ? "block" : "none"}}>Kyc Not Verified</Typography>
+        <Typography>Wallet Balance - {userDetails == "" ? 0 : userDetails.wallet_balance}</Typography>
         <Button variant="contained" onClick={signOut}>
           signout
         </Button>
@@ -60,6 +80,9 @@ const Dashboard = () => {
         </Button>
         <Button variant="contained" onClick={() => router.push("Transactions")}>
           Transactions
+        </Button>
+        <Button variant="contained" onClick={() => router.push("Coins")}>
+          Show Assets
         </Button>
       </Box>
     </Box>

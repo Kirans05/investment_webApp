@@ -94,8 +94,6 @@ const signup = () => {
       password: inputValues.password,
     });
 
-    console.log("data", data)
-    console.log("error", error)
 
     if (error) {
       setErrorMsg("Password should be atleast 6 characters");

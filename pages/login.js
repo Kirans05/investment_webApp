@@ -61,8 +61,6 @@ const login = () => {
       password: inputValues.password,
     });
 
-    console.log("data", data);
-    console.log("error", error);
 
     if (error) {
       setErrorMsg("Invalid login credentials");

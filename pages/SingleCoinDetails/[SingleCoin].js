@@ -3,15 +3,19 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highstock";
 import { useRouter } from "next/router";
 import { Box, Button, Menu, MenuItem, Typography } from "@mui/material";
+import axios from "axios";
+import supabase from "../../src/Config/supaBaseClient";
 
 const SingleCoin = () => {
-  const router = useRouter().query.SingleCoin;
+  const coinId = useRouter().query.SingleCoin;
   const chartRef = useRef();
   const options = { style: "currency", currency: "USD" };
   const numberFormat = new Intl.NumberFormat("en-US", options);
   const [NoOfDays, setNoOfDays] = useState(1);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [coinDetails, setCoinDetails] = useState("");
+  const [userDetails, setUserDetails] = useState(JSON.parse(localStorage.getItem("userData")))
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -129,7 +133,7 @@ const SingleCoin = () => {
 
   const fetchChartDetails = async () => {
     let response = await fetch(
-      `https://api.coingecko.com/api/v3/coins/${router}/market_chart?vs_currency=usd&days=${NoOfDays}`
+      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${NoOfDays}`
     );
 
     let data = await response.json();
@@ -139,6 +143,59 @@ const SingleCoin = () => {
       },
     });
   };
+
+  const fetchdata = async () => {
+    let response = await axios(
+      "https://api.coingecko.com/api/v3/coins/bitcoin?tickers=true&market_data=true&community_data=false&developer_data=false"
+    );
+    setCoinDetails(response.data);
+  };
+
+  const investHandler = async () => {
+    if(userDetails.wallet_balance < coinDetails.market_data.current_price.usd || userDetails.wallet_balance <= 0){
+      alert("Not Enough Balance to Purchase")
+      return
+    }
+
+    try{
+      let balanceResponse = await supabase.rpc("decrement_balance",{
+        amount:Math.ceil(coinDetails.market_data.current_price.usd)
+      })
+      if(balanceResponse.data == true){
+        try{
+          let transactionResponse = await supabase.rpc("update_transaction_details",{
+            id:userDetails.id,
+            amount:Math.ceil(coinDetails.market_data.current_price.usd),
+            sender:"kiran",
+            receiver:coinId,
+            message:`${coinId} purchase`,
+            type:"debit"
+          })
+          if(transactionResponse.data == true){
+            try{
+              let coinTableResponse = await supabase.rpc("update_coins_table",{
+                userid:userDetails.id,
+                coin_id:coinId,
+                purchase_price:Math.ceil(coinDetails.market_data.current_price.usd)
+              })
+              if(coinTableResponse.data == true){
+                alert("Coin SuccessFully Purchased")
+                return
+              }
+            }catch(err){
+
+            }
+          }
+        }catch(err){
+
+        }
+      }
+    }catch(err){
+
+    }
+
+  };
+
 
   useEffect(() => {
     fetchChartDetails();
@@ -150,7 +207,7 @@ const SingleCoin = () => {
         Charts
       </Typography>
       <Typography component={"h1"} fontSize={30}>
-        {router}
+        {coinId}
       </Typography>
       <Button onClick={handleClick} variant={"contained"}>
         {NoOfDays}
@@ -201,6 +258,58 @@ const SingleCoin = () => {
         constructorType="chart"
         ref={chartRef}
       />
+      <Button onClick={fetchdata}>Fettch</Button>
+      {coinDetails == "" ? null : (
+        <Box>
+          <Box component={"img"} src={coinDetails.image.large} width={100} />
+          <Typography>Description</Typography>
+          <Typography>{coinDetails.description.en}</Typography>
+          <Typography>Market cap rank{coinDetails.market_cap_rank}</Typography>
+          <Typography>
+            Current price - {coinDetails.market_data.current_price.usd}
+          </Typography>
+          <Typography>
+            Market Cap - {coinDetails.market_data.market_cap.usd}
+          </Typography>
+          <Typography>
+            Price Change in 24h -{" "}
+            {coinDetails.market_data.price_change_percentage_1h_in_currency.usd}
+            %
+          </Typography>
+          <Typography>
+            Price Change in 1y -{" "}
+            {coinDetails.market_data.price_change_percentage_1y_in_currency.usd}
+            %
+          </Typography>
+          <Typography>
+            Price Change in 7d -{" "}
+            {coinDetails.market_data.price_change_percentage_7d_in_currency.usd}
+            %
+          </Typography>
+          <Typography>
+            Price Change in 14d -{" "}
+            {
+              coinDetails.market_data.price_change_percentage_14d_in_currency
+                .usd
+            }
+            %
+          </Typography>
+          <Typography>
+            Price Change in 30d -{" "}
+            {
+              coinDetails.market_data.price_change_percentage_30d_in_currency
+                .usd
+            }
+            %
+          </Typography>
+          <Typography>
+            Total Volume - {coinDetails.market_data.total_volume.usd}
+          </Typography>
+          <Button variant="contained" onClick={investHandler}>
+            Invest Now
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };
