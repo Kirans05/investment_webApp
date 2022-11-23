@@ -15,7 +15,7 @@ const SingleCoin = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [coinDetails, setCoinDetails] = useState("");
-  const [userDetails, setUserDetails] = useState(JSON.parse(localStorage.getItem("userData")))
+  const [userDetails, setUserDetails] = useState("")
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -198,6 +198,7 @@ const SingleCoin = () => {
 
 
   useEffect(() => {
+    setUserDetails(JSON.parse(localStorage.getItem("userData")))
     fetchChartDetails();
   }, [NoOfDays]);
 
