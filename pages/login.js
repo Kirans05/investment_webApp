@@ -109,7 +109,7 @@ const login = () => {
               </span>
             </Typography>
           </Box>
-          <Lottie options={defaultOptions} height={400} width={400} />
+          <Lottie options={defaultOptions} width={400} height={400}/>
         </Box>
         <Box className={Styles.loginForm}>
           <Typography className={Styles.loginTitleAnimation}>

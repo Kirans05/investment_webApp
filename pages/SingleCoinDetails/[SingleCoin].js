@@ -2,12 +2,33 @@ import React, { useEffect, useRef, useState } from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highstock";
 import { useRouter } from "next/router";
-import { Box, Button, Menu, MenuItem, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Menu,
+  MenuItem,
+  Modal,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
 import supabase from "../../src/Config/supaBaseClient";
+import Header from "../../components/Header";
+import Styles from "../../styles/SingleCoin.module.css";
+import MuiAlert from "@mui/material/Alert";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
+
 
 const SingleCoin = () => {
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
   const coinId = useRouter().query.SingleCoin;
+  const router = useRouter()
   const chartRef = useRef();
   const options = { style: "currency", currency: "USD" };
   const numberFormat = new Intl.NumberFormat("en-US", options);
@@ -15,15 +36,32 @@ const SingleCoin = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [coinDetails, setCoinDetails] = useState("");
-  const [userDetails, setUserDetails] = useState("")
+  const [userDetails, setUserDetails] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [unitValue, setUnitValue] = useState(1);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
+  const [snackBarMsg, setSnackBarMsg] = useState("");
+  const [snackBarColor, setSnackBarColor] = useState("success");
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleSnackBarClick = () => {
+    setSnackBarOpen(true);
   };
 
-  const handleClose = (num) => {
-    setNoOfDays(num);
-    setAnchorEl(null);
+  const handleSnackBarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setSnackBarOpen(false);
+  };
+
+  const unitValueChange = (e) => {
+    if (e.target.value <= 0) {
+      return;
+    }
+
+    setUnitValue(e.target.value);
   };
 
   const [chartOptions, setChartOptions] = useState({
@@ -146,173 +184,282 @@ const SingleCoin = () => {
 
   const fetchdata = async () => {
     let response = await axios(
-      "https://api.coingecko.com/api/v3/coins/bitcoin?tickers=true&market_data=true&community_data=false&developer_data=false"
+      `https://api.coingecko.com/api/v3/coins/${coinId}?tickers=true&market_data=true&community_data=false&developer_data=false`
     );
+    console.log(response.data);
     setCoinDetails(response.data);
   };
 
-  const investHandler = async () => {
-    if(userDetails.wallet_balance < coinDetails.market_data.current_price.usd || userDetails.wallet_balance <= 0){
-      alert("Not Enough Balance to Purchase")
-      return
+  const investHandler = async (totalPrice) => {
+    if (
+      userDetails.wallet_balance < totalPrice ||
+      userDetails.wallet_balance <= 0
+    ) {
+      handleSnackBarClick();
+      setSnackBarColor("error");
+      setSnackBarMsg("Not Enough Balance to Purchase");
+      return;
     }
 
-    try{
-      let balanceResponse = await supabase.rpc("decrement_balance",{
-        amount:Math.ceil(coinDetails.market_data.current_price.usd)
-      })
-      if(balanceResponse.data == true){
-        try{
-          let transactionResponse = await supabase.rpc("update_transaction_details",{
-            id:userDetails.id,
-            amount:Math.ceil(coinDetails.market_data.current_price.usd),
-            sender:"kiran",
-            receiver:coinId,
-            message:`${coinId} purchase`,
-            type:"debit"
-          })
-          if(transactionResponse.data == true){
-            try{
-              let coinTableResponse = await supabase.rpc("update_coins_table",{
-                userid:userDetails.id,
-                coin_id:coinId,
-                purchase_price:Math.ceil(coinDetails.market_data.current_price.usd)
-              })
-              if(coinTableResponse.data == true){
-                alert("Coin SuccessFully Purchased")
-                return
-              }
-            }catch(err){
-
+    try {
+      let balanceResponse = await supabase.rpc("decrement_balance", {
+        amount: Math.ceil(totalPrice),
+      });
+      if (balanceResponse.data == true) {
+        try {
+          let transactionResponse = await supabase.rpc(
+            "update_transaction_details",
+            {
+              id: userDetails.id,
+              amount: Math.ceil(totalPrice),
+              sender: "kiran",
+              receiver: coinId,
+              message: `${coinId} purchase`,
+              type: "debit",
             }
+          );
+          if (transactionResponse.data == true) {
+            try {
+              let coinTableResponse = await supabase.rpc("update_coins_table", {
+                userid: userDetails.id,
+                coin_id: coinId,
+                purchase_price: Math.ceil(totalPrice),
+                purchase_unit: unitValue,
+              });
+              if (coinTableResponse.data == true) {
+                handleSnackBarClick();
+                setSnackBarColor("success");
+                setSnackBarMsg("Coin SuccessFully Purchased");
+                handleModalClose()
+                return;
+              }
+            } catch (err) {}
           }
-        }catch(err){
-
-        }
+        } catch (err) {}
       }
-    }catch(err){
-
-    }
-
+    } catch (err) {}
   };
 
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
+
+  const backButtonHandler = () => {
+    router.back();
+  };
 
   useEffect(() => {
-    setUserDetails(JSON.parse(localStorage.getItem("userData")))
+    setUserDetails(JSON.parse(localStorage.getItem("userData")));
     fetchChartDetails();
+    fetchdata();
   }, [NoOfDays]);
 
   return (
-    <Box>
-      <Typography component={"h1"} fontSize={30}>
-        Charts
-      </Typography>
-      <Typography component={"h1"} fontSize={30}>
-        {coinId}
-      </Typography>
-      <Button onClick={handleClick} variant={"contained"}>
-        {NoOfDays}
-      </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={() => handleClose(1)}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
+    <Box className={Styles.mainBox}>
+      <Header />
+      <Button
+        variant="contained"
+        className={Styles.backButton}
+        onClick={backButtonHandler}
       >
-        <MenuItem onClick={() => handleClose(1)}>1</MenuItem>
-        <MenuItem onClick={() => handleClose(2)}>2</MenuItem>
-        <MenuItem onClick={() => handleClose(3)}>3</MenuItem>
-        <MenuItem onClick={() => handleClose(4)}>4</MenuItem>
-        <MenuItem onClick={() => handleClose(5)}>5</MenuItem>
-        <MenuItem onClick={() => handleClose(6)}>6</MenuItem>
-        <MenuItem onClick={() => handleClose(7)}>7</MenuItem>
-        <MenuItem onClick={() => handleClose(8)}>8</MenuItem>
-        <MenuItem onClick={() => handleClose(9)}>9</MenuItem>
-        <MenuItem onClick={() => handleClose(10)}>10</MenuItem>
-        <MenuItem onClick={() => handleClose(11)}>11</MenuItem>
-        <MenuItem onClick={() => handleClose(12)}>12</MenuItem>
-        <MenuItem onClick={() => handleClose(13)}>13</MenuItem>
-        <MenuItem onClick={() => handleClose(14)}>14</MenuItem>
-        <MenuItem onClick={() => handleClose(15)}>15</MenuItem>
-        <MenuItem onClick={() => handleClose(16)}>16</MenuItem>
-        <MenuItem onClick={() => handleClose(17)}>17</MenuItem>
-        <MenuItem onClick={() => handleClose(18)}>18</MenuItem>
-        <MenuItem onClick={() => handleClose(19)}>19</MenuItem>
-        <MenuItem onClick={() => handleClose(20)}>20</MenuItem>
-        <MenuItem onClick={() => handleClose(21)}>21</MenuItem>
-        <MenuItem onClick={() => handleClose(22)}>22</MenuItem>
-        <MenuItem onClick={() => handleClose(23)}>23</MenuItem>
-        <MenuItem onClick={() => handleClose(24)}>24</MenuItem>
-        <MenuItem onClick={() => handleClose(25)}>25</MenuItem>
-        <MenuItem onClick={() => handleClose(26)}>26</MenuItem>
-        <MenuItem onClick={() => handleClose(27)}>27</MenuItem>
-        <MenuItem onClick={() => handleClose(28)}>28</MenuItem>
-        <MenuItem onClick={() => handleClose(29)}>29</MenuItem>
-        <MenuItem onClick={() => handleClose(30)}>30</MenuItem>
-      </Menu>
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={chartOptions}
-        constructorType="chart"
-        ref={chartRef}
-      />
-      <Button onClick={fetchdata}>Fettch</Button>
-      {coinDetails == "" ? null : (
-        <Box>
-          <Box component={"img"} src={coinDetails.image.large} width={100} />
-          <Typography>Description</Typography>
-          <Typography>{coinDetails.description.en}</Typography>
-          <Typography>Market cap rank{coinDetails.market_cap_rank}</Typography>
-          <Typography>
-            Current price - {coinDetails.market_data.current_price.usd}
-          </Typography>
-          <Typography>
-            Market Cap - {coinDetails.market_data.market_cap.usd}
-          </Typography>
-          <Typography>
-            Price Change in 24h -{" "}
-            {coinDetails.market_data.price_change_percentage_1h_in_currency.usd}
-            %
-          </Typography>
-          <Typography>
-            Price Change in 1y -{" "}
-            {coinDetails.market_data.price_change_percentage_1y_in_currency.usd}
-            %
-          </Typography>
-          <Typography>
-            Price Change in 7d -{" "}
-            {coinDetails.market_data.price_change_percentage_7d_in_currency.usd}
-            %
-          </Typography>
-          <Typography>
-            Price Change in 14d -{" "}
-            {
-              coinDetails.market_data.price_change_percentage_14d_in_currency
-                .usd
-            }
-            %
-          </Typography>
-          <Typography>
-            Price Change in 30d -{" "}
-            {
-              coinDetails.market_data.price_change_percentage_30d_in_currency
-                .usd
-            }
-            %
-          </Typography>
-          <Typography>
-            Total Volume - {coinDetails.market_data.total_volume.usd}
-          </Typography>
-          <Button variant="contained" onClick={investHandler}>
-            Invest Now
+        <ArrowBackIcon /> &nbsp; Back
+      </Button>
+      <Box className={Styles.coinDetailsMainPage}>
+        <Box className={Styles.buttonGroup}>
+          <Button
+            onClick={() => setNoOfDays(1)}
+            variant={"contained"}
+            className={Styles.individualButton}
+          >
+            1D
+          </Button>
+          <Button
+            onClick={() => setNoOfDays(7)}
+            variant={"contained"}
+            className={Styles.individualButton}
+          >
+            7D
+          </Button>
+          <Button
+            onClick={() => setNoOfDays(14)}
+            variant={"contained"}
+            className={Styles.individualButton}
+          >
+            14D
+          </Button>
+          <Button
+            onClick={() => setNoOfDays(30)}
+            variant={"contained"}
+            className={Styles.individualButton}
+          >
+            30D
           </Button>
         </Box>
-      )}
+        <Box className={Styles.highChartReact}>
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={chartOptions}
+            constructorType="chart"
+            ref={chartRef}
+          />
+        </Box>
+        {coinDetails == "" ? null : (
+          <Box className={Styles.coinInformation}>
+            <Box className={Styles.coinImageAndName}>
+              <Box
+                component={"img"}
+                src={coinDetails.image.large}
+                className={Styles.coinImage}
+              />
+              <Typography className={Styles.coinName}>
+                {coinDetails.name}
+              </Typography>
+            </Box>
+            <Typography className={Styles.descriptionHeading}>
+              Description
+            </Typography>
+            <Typography className={Styles.coinDescription}>
+              {coinDetails.description.en}
+            </Typography>
+            <Typography className={Styles.coinDetailsTypography}>
+              Market cap rank{coinDetails.market_cap_rank}
+            </Typography>
+            <Typography className={Styles.coinDetailsTypography}>
+              Current price - {coinDetails.market_data.current_price.usd}
+            </Typography>
+            <Typography className={Styles.coinDetailsTypography}>
+              Market Cap - {coinDetails.market_data.market_cap.usd}
+            </Typography>
+            <Typography className={Styles.coinDetailsTypography}>
+              Price Change in 24h -{" "}
+              {
+                coinDetails.market_data.price_change_percentage_1h_in_currency
+                  .usd
+              }
+              %
+            </Typography>
+            <Typography className={Styles.coinDetailsTypography}>
+              Price Change in 1y -{" "}
+              {
+                coinDetails.market_data.price_change_percentage_1y_in_currency
+                  .usd
+              }
+              %
+            </Typography>
+            <Typography className={Styles.coinDetailsTypography}>
+              Price Change in 7d -{" "}
+              {
+                coinDetails.market_data.price_change_percentage_7d_in_currency
+                  .usd
+              }
+              %
+            </Typography>
+            <Typography className={Styles.coinDetailsTypography}>
+              Price Change in 14d -{" "}
+              {
+                coinDetails.market_data.price_change_percentage_14d_in_currency
+                  .usd
+              }
+              %
+            </Typography>
+            <Typography className={Styles.coinDetailsTypography}>
+              Price Change in 30d -{" "}
+              {
+                coinDetails.market_data.price_change_percentage_30d_in_currency
+                  .usd
+              }
+              %
+            </Typography>
+            <Typography className={Styles.coinDetailsTypography}>
+              Total Volume - {coinDetails.market_data.total_volume.usd}
+            </Typography>
+            <Button
+              variant="contained"
+              // onClick={investHandler}
+              onClick={handleModalOpen}
+              className={Styles.investmentbutton}
+            >
+              Invest Now
+            </Button>
+            <Modal
+              open={modalOpen}
+              onClose={handleModalClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box className={Styles.modalBoxStyle}>
+                <Typography className={Styles.modalHeading}>
+                  Please Select The Number Of Units
+                </Typography>
+                <TextField
+                  id="outlined-basic"
+                  label="Units"
+                  variant="outlined"
+                  name="phoneNumber"
+                  type={"number"}
+                  onChange={unitValueChange}
+                  value={unitValue}
+                />
+                <Typography>
+                  Total amount -{" "}
+                  {unitValue * coinDetails.market_data.current_price.usd}
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    columnGap: "30px",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={handleModalClose}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() =>
+                      investHandler(
+                        unitValue * coinDetails.market_data.current_price.usd
+                      )
+                    }
+                  >
+                    Purchase
+                  </Button>
+                </Box>
+              </Box>
+            </Modal>
+            <Snackbar
+              open={snackBarOpen}
+              autoHideDuration={6000}
+              onClose={handleSnackBarClose}
+            >
+              <Alert
+                onClose={handleSnackBarClose}
+                severity={snackBarColor}
+                sx={{ width: "100%" }}
+              >
+                {snackBarMsg}
+              </Alert>
+            </Snackbar>
+          </Box>
+        )}
+      </Box>
     </Box>
   );
 };
 
 export default SingleCoin;
+
+// begin
+//   insert into public.coins_table(id,coinid,price_purchased,units_purchase)
+//   values(userId,coin_id,purchase_price,purchase_unit);
+
+//   return true;
+// end;
+
+// update_coins_table
+
+// units_purchase

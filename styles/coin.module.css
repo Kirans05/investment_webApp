@@ -1,7 +1,62 @@
+.mainBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    row-gap: 40px;
+    width: 100%;
+}
+
+.tableContainer {
+    width: 100%;
+}
+
+
+.coinTable{
+    width: 80%;
+    margin-left: 10%;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+}
+
+
 .coinImageAndName {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
     column-gap: 20px;
+}
+
+.backButton {
+    align-self: flex-start;
+    background-color: #c8cfca;
+    color: black;
+    border-radius: 20px;
+  }
+  
+  .backButton:hover{
+    background-color: red;
+    color: white;
+  }
+
+
+@media (min-width:0px) and (max-width:480px){
+    .coinTable{
+        width: 96%;
+        margin-left: 2%;
+        margin-right: 2%;
+        box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+    }
+}
+
+@media (min-width:481px) and (max-width:768px){
+    .coinTable{
+        width: 96%;
+        margin-right: 2%;
+        margin-left: 2%;
+        
+    }
+}
+
+@media (min-width:769px) {
+  
 }

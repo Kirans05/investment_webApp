@@ -1,0 +1,157 @@
+.mainBox {
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+}
+
+.coinDetailsMainPage {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+
+.buttonGroup{
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    padding: 0% 2%;
+}
+
+.individualButton{
+    background-color: white;
+    color: black;
+}
+
+.individualButton:hover{
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.highChartReact {
+}
+
+.coinImageAndName{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.coinImageAndName .coinImage {
+    width: 10%;
+}
+
+.coinName{
+    font-size: 40px;
+}
+
+.descriptionHeading{
+    font-size: 25px;
+}
+
+.coinDescription {
+    font-size: 20px;
+}
+
+.coinInformation{
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.coinDetailsTypography {
+    font-size: 20px;
+}
+
+.coinInformation .investmentbutton {
+    background-color: green;
+    margin-top: 20px;
+    align-self:center;
+}
+
+
+.modalBoxStyle {
+    width: 30%;
+    background-color: white;
+    position: absolute;
+    top: 25%;
+    left: 35%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+    padding: 2% 2%;
+}
+
+.modalHeading {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.backButton {
+    align-self: flex-start;
+    background-color: #c8cfca;
+    color: black;
+    border-radius: 20px;
+  }
+  
+  .backButton:hover{
+    background-color: red;
+    color: white;
+  }
+
+
+@media (min-width:0px) and (max-width:480px){
+    .coinName{
+        font-size: 30px;
+    }
+
+    .descriptionHeading{
+        font-size: 20px;
+    }
+
+    .coinDescription {
+        font-size: 17px;
+    }
+
+    .coinDetailsTypography {
+        font-size: 15px;
+    }
+
+    .modalBoxStyle {
+        width: 90%;
+        left: 3%;
+        top: 25%;
+    }
+}
+
+@media (min-width:481px) and (max-width:768px){
+    .coinName{
+        font-size: 35px;
+    }
+
+    .descriptionHeading{
+        font-size: 22px;
+    }
+
+    .coinDescription {
+        font-size: 18px;
+    }
+
+    .coinDetailsTypography {
+        font-size: 18px;
+    }
+
+    .modalBoxStyle {
+        width: 70%;
+        left: 15%;
+        top: 25%;
+    }
+}
+
+@media (min-width:769px) {
+    
+}

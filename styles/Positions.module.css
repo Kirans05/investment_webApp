@@ -1,0 +1,80 @@
+.mainBox {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    justify-content: flex-start;
+    width: 100%;
+  }
+  
+  .PositionsTable {
+    width: 70%;
+    margin-left: 15%;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+  }
+  
+  .tableContainer {
+    width: 100%;
+  }
+  
+  .backButton {
+    align-self: flex-start;
+    background-color: #c8cfca;
+    color: black;
+    border-radius: 20px;
+  }
+  
+  .backButton:hover{
+    background-color: red;
+    color: white;
+  }
+  
+  
+    
+  
+  @media (min-width:0px) and (max-width:480px){
+      .PositionsTable {
+        width: 96%;
+        margin-left: 2%;
+        margin-right: 2%;
+        box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+      }
+  }
+  
+  @media (min-width:481px) and (max-width:768px){
+    .PositionsTable {
+      width: 96%;
+        margin-right: 2%;
+        margin-left: 2%;
+    }
+  }
+  
+  @media (min-width:769px) {
+  
+  }
+  
+  /* declare
+    balance int;
+    obj jsonb;
+  begin
+    select wallet_balance,transaction_details
+    into balance,obj
+    from public.profiles
+    where id = auth.uid();
+    -- update balance
+    balance = balance + amount;
+  
+    update public.profiles
+    set wallet_balance = balance
+    where id = auth.uid();
+  
+    update public.profiles
+    set transaction_details = obj || details
+    where id = auth.uid();
+  
+    return true;
+    
+  end; */
+  
+  
+  
+  /* '["{\"type\":\"\",\"from\":\"\",\"to\":\"\",\"message\":\"\",\"amount\":\"\",\"date\":\"\"}"]'::jsonb */

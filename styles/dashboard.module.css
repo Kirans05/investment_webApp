@@ -5,8 +5,113 @@
 }
 
 .dashboardMainBox {
-    align-self: center;
+    /* align-self: center; */
     display: flex;
     flex-direction: column;
     row-gap: 20px;
+    width: 96%;
+    align-items: flex-start;
+    padding: 2%;
+}
+
+
+.wallet_balance {
+     height: 100px; 
+     width: 250px;
+    background: linear-gradient(161deg, #1f2c8e, #7339a8, #b361a5, #b69198);
+    color: white;
+    border-radius: 20px;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    row-gap: 5px;
+}
+
+.addFundBox {
+    height: 100px; 
+     width: 250px;
+    /* background: linear-gradient(161deg, #1f2c8e, #7339a8, #b361a5, #b69198); */
+    /* background-color: white; */
+    background: rgb(106,98,240);
+background: linear-gradient(90deg, rgba(106,98,240,0.8578781854538691) 0%, rgba(38,171,145,0.8298669809720763) 53%, rgba(217,0,255,0.5441526952577906) 93%);
+    color: black;
+    border-radius: 20px;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    row-gap: 40px;
+    /* border: 2px solid red; */
+}
+
+
+.addFundBox .fundBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    color: white;
+}
+
+
+.addFundBox .fundBoxButton{
+    background-color: white;
+    color: black;
+    border-radius: 20px;
+}
+
+
+@media (min-width:0px) and (max-width:480px){
+    .wallet_balance {
+        width: 95%;
+        padding-left: 5%;
+    }
+
+    .addFundBox {
+        width: 95%;
+        padding-left: 5%;
+    }
+
+    .dashboardMainBox {
+        padding: 0%;
+    }
+}
+
+
+
+@media (min-width:481px) and (max-width:768px){
+    .wallet_balance {
+        width: 50%;
+        padding-left: 5%;
+    }
+
+    .addFundBox {
+        width: 50%;
+        padding-left: 5%;
+    }
+
+    .dashboardMainBox {
+        padding: 2%;
+    }
+}
+
+
+
+@media (min-width:769px) {
+    .wallet_balance {
+        width: 25%;
+        padding-left: 2%;
+    }
+    
+    .addFundBox {
+        width: 25%;
+        padding-left: 2%;
+    }
+
+    .dashboardMainBox {
+        padding: 2%;
+    }
 }

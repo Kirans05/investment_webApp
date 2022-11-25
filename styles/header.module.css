@@ -3,7 +3,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0px 35px;
+    padding: 1% 2% 0%;
 }
 
 .menuIcon:hover {
@@ -16,6 +16,10 @@
     align-items: center;
     flex-direction: row;
     column-gap: 5px;
+}
+
+.webSiteTitle {
+    font-size: 25px;
 }
 
 
@@ -32,13 +36,19 @@
     flex-direction: row;
     column-gap: 5px;
     border: 5px solid white;
-    padding: 10px;
+    /* padding: 10px; */
 }
 
 .mainBox .rightHeader .account:hover {
     border-bottom: 5px solid green ;
     cursor: pointer;
 }
+
+.mainBox .rightHeader .account .accountTypography {
+    font-size: 20px;
+    font-weight: 400;
+}
+
 
 .drawer {
     width: 250px;
@@ -49,8 +59,69 @@
     padding-top: 30px;
 }
 
+.drawerTypograpy {
+    font-size: 20px;
+}
+
 
 .drawer .drawerTypograpy:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+
+.signoutTypography{
+    font-size: 20px;
+    font-weight: 400;
+    border-bottom: 5px solid white;
+}
+
+.signoutTypography:hover{
+    cursor: pointer;
+    border-bottom: 5px solid green;
+}
+
+.rightHeaderOptions{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 15px;
+}
+
+.rightHeaderOptions .rightHeaderOptiontypography {
+    font-size: 20px;
+    font-weight: 400;
+    border-bottom: 5px solid white;
+}
+
+.rightHeaderOptiontypography:hover{
+    cursor: pointer;
+    border-bottom: 5px solid green;
+}
+
+
+@media (min-width:0px) and (max-width:480px){
+    .mainBox {
+        padding: 2%;
+    }
+
+    .mainBox .rightHeader{
+        display: none;
+    }
+
+    .drawer {
+        width: 200px;
+    }
+
+}
+
+
+@media (min-width:481px) and (max-width:768px){
+    .mainBox .rightHeader{
+        display: none;
+    }
+}
+
+
+@media (min-width:769px) {
+
 }

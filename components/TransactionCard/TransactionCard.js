@@ -11,7 +11,7 @@ const TransactionCard = ({item, Styles, index}) => {
   >
     <TableCell align="center">{index+1}</TableCell>
     <TableCell align="center">{item.sender}</TableCell>
-    <TableCell align="center">{item.receiver}</TableCell>
+    {/* <TableCell align="center">{item.receiver}</TableCell> */}
     <TableCell align='center'>
     {item.amount}
     </TableCell>

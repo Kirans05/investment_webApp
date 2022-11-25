@@ -1,22 +1,42 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Alert, Button, Snackbar, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import supabase from "../src/Config/supaBaseClient";
 import Styles from "../styles/fund.module.css";
+import MuiAlert from "@mui/material/Alert";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const Fund = () => {
   const router = useRouter();
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
   const [userId, setUserId] = useState("");
   const [inputValues, setInputValues] = useState({
     type: "credit",
     from: "",
-    to: "",
+    to: "null",
     message: "",
     amount: "",
   });
   const [errorMsg, setErrorMsg] = useState("");
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
+  const [snackBarMsg, setSnackBarMsg] = useState("");
+  const [snackBarColor, setSnackBarColor] = useState("success");
+
+  const handleSnackBarClick = () => {
+    setSnackBarOpen(true);
+  };
+
+  const handleSnackBarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setSnackBarOpen(false);
+  };
 
   const changeHandler = (e) => {
     setInputValues({ ...inputValues, [e.target.name]: e.target.value });
@@ -49,15 +69,26 @@ const Fund = () => {
             id: userId,
             type: "credit",
           });
-          if(resp.status == 200){
-            alert("Successfully added balance")
-          }else{
-            alert("Internal Server Problem")
+          console.log(resp);
+          if (resp.status == 200) {
+            handleSnackBarClick();
+            setSnackBarColor("success");
+            setSnackBarMsg("Successfully added balance");
+          } else {
+            handleSnackBarClick();
+            snackBarOpen(true);
+            setSnackBarColor("error");
+            setSnackBarMsg("Internal Server Problem");
           }
         } catch (err) {}
       }
     } catch (err) {}
   };
+
+
+  const backButtonHandler = () => {
+    router.back()
+  }
 
   useEffect(() => {
     let { user } = JSON.parse(
@@ -69,6 +100,7 @@ const Fund = () => {
   return (
     <Box className={Styles.mainBox}>
       <Header />
+      <Button variant="contained"className={Styles.backButton} onClick={backButtonHandler}><ArrowBackIcon /> &nbsp; Back</Button>
       <Box className={Styles.fundPageBox}>
         <TextField
           id="outlined-basic"
@@ -86,14 +118,14 @@ const Fund = () => {
           value={inputValues.from}
           onChange={changeHandler}
         />
-        <TextField
+        {/* <TextField
           id="outlined-basic"
           label="to"
           variant="outlined"
           name="to"
           value={inputValues.to}
           onChange={changeHandler}
-        />
+        /> */}
         <TextField
           id="outlined-basic"
           label="message"
@@ -107,6 +139,20 @@ const Fund = () => {
         </Button>
         <Typography className={Styles.errorMsg}>{errorMsg}</Typography>
       </Box>
+
+      <Snackbar
+        open={snackBarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackBarClose}
+      >
+        <Alert
+          onClose={handleSnackBarClose}
+          severity={snackBarColor}
+          sx={{ width: "100%" }}
+        >
+          {snackBarMsg}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

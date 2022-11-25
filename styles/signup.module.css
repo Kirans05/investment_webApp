@@ -140,8 +140,8 @@
     }
 
     .sigupForm {
-        width: 80%;
-        padding: 5% 4%;
+        width: 90%;
+        padding: 7% 4%;
     }
 
     .smallScreenLoginButton {
@@ -150,9 +150,15 @@
 
     .errorMsg {
         color: red;
-        font-size: 15px;
+        font-size: 13px;
         text-align: center;
         display: block;
+    }
+
+    .loginOption {
+        font-size: 15px;
+        /* margin-top: 0px; */
+        margin: 5px;
     }
 }
 

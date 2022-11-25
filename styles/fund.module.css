@@ -1,15 +1,15 @@
 .mainBox {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    row-gap: 20px;
+    justify-content: flex-start;
+    row-gap: 30px;
 }
 
 .mainBox .fundPageBox {
     display: flex;
     flex-direction: column;
     align-self: center;
-    width: 30%;
+    width: 35%;
     row-gap: 20px;
 }
 
@@ -18,4 +18,32 @@
     color: red;
     font-size: 15px;
     text-align: center;
+}
+
+.backButton {
+    align-self: flex-start;
+    background-color: #c8cfca;
+    color: black;
+    border-radius: 20px;
+}
+
+.backButton:hover{
+    background-color: red;
+    color: white;
+}
+
+@media (min-width:0px) and (max-width:480px){
+    .mainBox .fundPageBox {
+        width: 80%;
+    }
+}
+
+@media (min-width:481px) and (max-width:768px){
+    .mainBox .fundPageBox {
+        width: 50%;
+    }
+}
+
+@media (min-width:769px) {
+   
 }
