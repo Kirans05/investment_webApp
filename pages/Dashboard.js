@@ -17,7 +17,7 @@ import axios from "axios";
 const Dashboard = () => {
   const router = useRouter();
   const [userDetails, setUserDetails] = useState("");
-  const [kycVerified, setKycVerified] = useState(false);
+  const [rerender, setRerender] = useState(true);
 
   const fetchUserDetails = async (user) => {
     let response = await supabase
@@ -31,30 +31,32 @@ const Dashboard = () => {
     setUserDetails(data);
   };
 
-  const kycVerification = async (userId) => {
+  const kycVerification = async () => {
     let getDetails = {
       url: "https://637cac1f16c1b892ebbb6fe6.mockapi.io/userData",
       method: "GET",
     };
     let response = await axios(getDetails);
     let { data } = response;
-    let filterItem = data.filter((item) => item.userKycId == userId);
+    let filterItem = data.filter((item) => item.userKycId == userDetails.id);
     if (filterItem.length == 0) {
       let postDetails = {
         url: "https://637cac1f16c1b892ebbb6fe6.mockapi.io/userData",
         method: "POST",
         data: {
-          userKycId: userId,
+          userKycId: userDetails.id,
         },
       };
       let postResponse = await axios(postDetails);
       if (postResponse.statusText == "Created") {
-        setKycVerified(true);
-      } else {
-        setKycVerified(false);
+        let supabaseResponse = await supabase
+          .from("profiles")
+          .update([{ kyc_verified: true }])
+          .eq("id", userDetails.id);
+        if (supabaseResponse.status == 204) {
+          setRerender(!rerender);
+        }
       }
-    } else {
-      setKycVerified(true);
     }
   };
 
@@ -62,34 +64,75 @@ const Dashboard = () => {
     const { user } = JSON.parse(
       localStorage.getItem("sb-ziaxsvytbaahgjrompdd-auth-token")
     );
-    kycVerification(user.id)
     fetchUserDetails(user);
-  }, []);
+  }, [rerender]);
 
   return (
     <Box className={Styles.mainBox}>
       <Header />
       <Box className={Styles.dashboardMainBox}>
-        <Alert severity="warning" sx={{ display: kycVerified == false ? "flex" : "none" }}>KYC not verified</Alert>
+        {userDetails == "" ? null : (
+          <Alert
+            severity="warning"
+            sx={{
+              display: userDetails.kyc_verified == false ? "flex" : "none",
+            }}
+            onClick={kycVerification}
+          >
+            KYC not verified &nbsp;{" "}
+            <span className={Styles.kycVerificationButton}>Verify Now!</span>
+          </Alert>
+        )}
+
         {userDetails == "" ? (
-          <Skeleton variant="rectangular" width={400} height={120} style={{borderRadius:"20px"}} />
+          <Skeleton
+            variant="rectangular"
+            width={400}
+            height={120}
+            style={{ borderRadius: "20px" }}
+          />
         ) : (
           <Box className={Styles.wallet_balance}>
             <Typography>Your Portfolio</Typography>
             <Typography>$ {userDetails.wallet_balance}</Typography>
+            <Button
+                variant="contained"
+                className={Styles.portfolioButton}
+                onClick={() => router.push("Portfolio")}
+              >
+                View Portfolio
+              </Button>
           </Box>
         )}
         {userDetails == "" ? (
-          <Skeleton variant="rectangular" width={400} height={120} style={{borderRadius:"20px"}} />
+          <Skeleton
+            variant="rectangular"
+            width={400}
+            height={120}
+            style={{ borderRadius: "20px" }}
+          />
         ) : (
           <Box className={Styles.addFundBox}>
             <Box className={Styles.fundBox}>
-            <Typography>Funds Available</Typography>
-            <Typography>$ {userDetails.wallet_balance}</Typography>
+              <Typography>Funds Available</Typography>
+              <Typography>$ {userDetails.wallet_balance}</Typography>
             </Box>
-            <Button variant="contained" className={Styles.fundBoxButton}
-            onClick={() => router.push("Fund")}
-            >Add Funds</Button>
+            <Box className={Styles.fundBoxButtons}>
+              <Button
+                variant="contained"
+                className={Styles.fundBoxButton}
+                onClick={() => router.push("Fund")}
+              >
+                Add Funds
+              </Button>
+              <Button
+                variant="contained"
+                className={Styles.fundBoxButton}
+                onClick={() => router.push("Withdraw")}
+              >
+                withdraw
+              </Button>
+            </Box>
           </Box>
         )}
       </Box>

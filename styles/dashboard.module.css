@@ -16,7 +16,7 @@
 
 
 .wallet_balance {
-     height: 100px; 
+     height: 120px; 
      width: 250px;
     background: linear-gradient(161deg, #1f2c8e, #7339a8, #b361a5, #b69198);
     color: white;
@@ -26,16 +26,14 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    row-gap: 5px;
+    row-gap: 10px;
 }
 
 .addFundBox {
-    height: 100px; 
-     width: 250px;
-    /* background: linear-gradient(161deg, #1f2c8e, #7339a8, #b361a5, #b69198); */
-    /* background-color: white; */
+    height: 120px; 
+    width: 250px;
     background: rgb(106,98,240);
-background: linear-gradient(90deg, rgba(106,98,240,0.8578781854538691) 0%, rgba(38,171,145,0.8298669809720763) 53%, rgba(217,0,255,0.5441526952577906) 93%);
+    background: linear-gradient(90deg, rgba(106,98,240,0.8578781854538691) 0%, rgba(38,171,145,0.8298669809720763) 53%, rgba(217,0,255,0.5441526952577906) 93%);
     color: black;
     border-radius: 20px;
     padding: 1%;
@@ -44,7 +42,6 @@ background: linear-gradient(90deg, rgba(106,98,240,0.8578781854538691) 0%, rgba(
     align-items: flex-start;
     justify-content: center;
     row-gap: 40px;
-    /* border: 2px solid red; */
 }
 
 
@@ -52,7 +49,7 @@ background: linear-gradient(90deg, rgba(106,98,240,0.8578781854538691) 0%, rgba(
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 90%;
+    width: 100%;
     color: white;
 }
 
@@ -63,16 +60,39 @@ background: linear-gradient(90deg, rgba(106,98,240,0.8578781854538691) 0%, rgba(
     border-radius: 20px;
 }
 
+.kycVerificationButton {
+}
+
+.kycVerificationButton:hover{
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+
+
+.addFundBox .fundBoxButtons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.wallet_balance .portfolioButton {
+    background-color: white;
+    color: black;
+    border-radius: 60px;
+}
+
 
 @media (min-width:0px) and (max-width:480px){
     .wallet_balance {
         width: 95%;
-        padding-left: 5%;
+        padding:2% 5%;
     }
 
     .addFundBox {
         width: 95%;
-        padding-left: 5%;
+        padding:2% 5%;
     }
 
     .dashboardMainBox {
@@ -85,12 +105,12 @@ background: linear-gradient(90deg, rgba(106,98,240,0.8578781854538691) 0%, rgba(
 @media (min-width:481px) and (max-width:768px){
     .wallet_balance {
         width: 50%;
-        padding-left: 5%;
+        padding:2% 5%;
     }
 
     .addFundBox {
         width: 50%;
-        padding-left: 5%;
+        padding:2% 5% ;
     }
 
     .dashboardMainBox {
@@ -104,11 +124,13 @@ background: linear-gradient(90deg, rgba(106,98,240,0.8578781854538691) 0%, rgba(
     .wallet_balance {
         width: 25%;
         padding-left: 2%;
+        padding-right: 2%;
     }
     
     .addFundBox {
         width: 25%;
         padding-left: 2%;
+        padding-right: 2%;
     }
 
     .dashboardMainBox {

@@ -69,7 +69,6 @@ const Fund = () => {
             id: userId,
             type: "credit",
           });
-          console.log(resp);
           if (resp.status == 200) {
             handleSnackBarClick();
             setSnackBarColor("success");
@@ -80,6 +79,9 @@ const Fund = () => {
             setSnackBarColor("error");
             setSnackBarMsg("Internal Server Problem");
           }
+          setTimeout(() => {
+            router.push("Dashboard")
+          }, 3000)
         } catch (err) {}
       }
     } catch (err) {}

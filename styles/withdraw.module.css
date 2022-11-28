@@ -1,0 +1,51 @@
+.mainBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    row-gap: 30px;
+}
+
+.mainBox .withdrawPageBox{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 35%;
+    row-gap: 20px;
+}
+
+
+.mainBox .withdrawPageBox .errorMsg{
+    color: red;
+    font-size: 15px;
+    text-align: center;
+}
+
+
+.mainBox .backButton {
+    align-self: flex-start;
+    background-color: #c8cfca;
+    color: black;
+    border-radius: 20px;
+}
+
+.mainBox .backButton:hover{
+    background-color: red;
+    color: white;
+}
+
+
+@media (min-width:0px) and (max-width:480px){
+    .mainBox .withdrawPageBox {
+        width: 80%;
+    }
+}
+
+@media (min-width:481px) and (max-width:768px){
+    .mainBox .withdrawPageBox {
+        width: 50%;
+    }
+}
+
+@media (min-width:769px) {
+   
+}

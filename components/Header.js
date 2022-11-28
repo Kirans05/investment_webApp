@@ -59,7 +59,6 @@ const Header = () => {
   };
 
   const list = (anchor) => {
-    const fontsize = "20px";
     return (
       <Box
         className={Styles.drawer}
@@ -90,6 +89,13 @@ const Header = () => {
         </Typography>
         <Typography
           className={Styles.drawerTypograpy}
+          onClick={() => router.push("Portfolio")}
+          sx={{ display: userExist == true ? "flex" : "none" }}
+        >
+          PortFolio
+        </Typography>
+        <Typography
+          className={Styles.drawerTypograpy}
           onClick={() => router.push("Fund")}
           sx={{ display: userExist == true ? "flex" : "none" }}
         >
@@ -109,13 +115,13 @@ const Header = () => {
         >
           Show Assets
         </Typography>
-        <Typography
+        {/* <Typography
           className={Styles.drawerTypograpy}
           onClick={() => router.push("Positions")}
           sx={{ display: userExist == true ? "flex" : "none" }}
         >
           Positions
-        </Typography>
+        </Typography> */}
         <Typography className={Styles.drawerTypograpy} onClick={signOut}
         sx={{ display: userExist == true ? "flex" : "none" }}
         >

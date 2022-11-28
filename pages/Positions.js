@@ -13,7 +13,6 @@ const Positions = () => {
     const router = useRouter()
     const [positionsArr, setPositionsArr] = useState([])
     const backButtonHandler = () => {
-        // console.log(router)
         router.back()
     }
 
