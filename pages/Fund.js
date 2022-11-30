@@ -16,7 +16,7 @@ const Fund = () => {
   const [userId, setUserId] = useState("");
   const [inputValues, setInputValues] = useState({
     type: "credit",
-    from: "",
+    from: "null",
     to: "null",
     message: "",
     amount: "",
@@ -112,14 +112,14 @@ const Fund = () => {
           type={"number"}
           onChange={changeHandler}
         />
-        <TextField
+        {/* <TextField
           id="outlined-basic"
           label="from"
           variant="outlined"
           name="from"
           value={inputValues.from}
           onChange={changeHandler}
-        />
+        /> */}
         {/* <TextField
           id="outlined-basic"
           label="to"

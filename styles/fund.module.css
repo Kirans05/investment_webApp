@@ -25,6 +25,7 @@
     background-color: #c8cfca;
     color: black;
     border-radius: 20px;
+    margin-left: 30px;
 }
 
 .backButton:hover{
@@ -36,11 +37,19 @@
     .mainBox .fundPageBox {
         width: 80%;
     }
+
+    .backButton{
+        margin-left: 10px;
+    }
 }
 
 @media (min-width:481px) and (max-width:768px){
     .mainBox .fundPageBox {
         width: 50%;
+    }
+
+    .backButton{
+        margin-left: 15px;
     }
 }
 

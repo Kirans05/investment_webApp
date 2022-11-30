@@ -28,6 +28,7 @@
   background-color: #c8cfca;
   color: black;
   border-radius: 20px;
+  margin-left: 30px;
 }
 
 .backButton:hover{
@@ -35,8 +36,61 @@
   color: white;
 }
 
+.transactionPageSkeleton {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  align-items: center;
+}
 
-  
+
+.skeleton{
+  width: 75%;
+  height: 50px;
+}
+
+.transactionPageBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  row-gap: 5px;
+}
+
+.transactionCardMainBox{
+  display: flex;
+  flex-direction: row;
+  padding: 1% 5%;
+  justify-content: space-between;
+  align-items: center;
+  width: 70%;
+  align-self: center;
+}
+
+.transactionCardMainBox .transactionCardLeftPart{
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+  align-items: center;
+}
+
+.transactionMsg {
+  color: black;
+  font-weight: 600;
+  text-transform: capitalize;
+  font-size: 17px;
+  opacity: 1;
+}
+
+.transactionDate {
+  font-weight: 200;
+  opacity: 0.6;
+  font-size: 14px;
+}  
+
+.transactionamount {
+  font-size: 17px;
+  font-weight: 600;
+}
 
 @media (min-width:0px) and (max-width:480px){
     .TransactionTable {
@@ -45,18 +99,75 @@
         margin-right: 2%;
         box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
     }
+
+    .backButton{
+      margin-left: 10px;
+    }
+
+    .transactionCardMainBox {
+      width: 98%;
+      padding: 1% 1%;
+    }
+
+    .transactionMsg{
+      font-size: 14px;
+    }
+    
+    .transactionDate{
+      font-size: 12px;
+    }
+
+    .transactionamount {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .divider{
+      width: 100%;
+      align-self: center;
+    }
 }
 
 @media (min-width:481px) and (max-width:768px){
   .TransactionTable {
     width: 96%;
-        margin-right: 2%;
-        margin-left: 2%;
+    margin-right: 2%;
+    margin-left: 2%;
+  }
+
+  .backButton{
+    margin-left: 15px;
+  }
+
+  .transactionCardMainBox {
+    width: 80%;
+    padding: 1% 5%;
+  }
+
+  .transactionMsg{
+    font-size: 15px;
+  }
+  
+  .transactionDate{
+    font-size: 13px;
+  }
+
+  .transactionamount {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .divider{
+    width: 80%;
+    align-self: center;
   }
 }
 
 @media (min-width:769px) {
-
+  .divider{
+    width: 70%;
+    align-self: center;
+  }
 }
 
 /* declare

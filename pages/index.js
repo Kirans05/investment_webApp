@@ -9,9 +9,17 @@ import Dashboard from './Dashboard';
 import {useState, useEffect} from "react"
 
 const index = () => {
+
+  const [indexPageRrender, setIndexPageRerender] = useState(true)
+
+  useEffect(() => {
+
+  },[indexPageRrender])
+
+  console.log("first")
   return (
     <Box >
-     <Header />
+     <Header setIndexPageRerender={setIndexPageRerender} indexPageRrender={indexPageRrender}/>
     </Box>
   )
 }

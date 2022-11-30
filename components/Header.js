@@ -22,7 +22,7 @@ import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import { useRouter } from "next/router";
 import supabase from "../src/Config/supaBaseClient";
 
-const Header = () => {
+const Header = ({indexPageRrender, setIndexPageRerender}) => {
   const router = useRouter();
   const [userExist, setUserExist] = useState(false);
   const [state, setState] = React.useState({
@@ -133,7 +133,11 @@ const Header = () => {
 
   const signOut = async () => {
     const res = await supabase.auth.signOut();
-    router.push("/");
+    if(router.asPath == "/"){
+      setIndexPageRerender(!indexPageRrender)
+    }else{
+      router.push("/");
+    }
   };
 
   useEffect(() => {

@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Paper,
+  Skeleton,
   Table,
   TableBody,
   TableCell,
@@ -15,9 +16,7 @@ import React, { useEffect, useState } from "react";
 import CoinCard from "../components/CoinCard/CoinCard";
 import Header from "../components/Header";
 import Styles from "../styles/coin.module.css";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
-
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const Coins = () => {
   const router = useRouter();
@@ -57,7 +56,7 @@ const Coins = () => {
       >
         <ArrowBackIcon /> &nbsp; Back
       </Button>
-      <Box className={Styles.tableContainer}>
+      {/* <Box className={Styles.tableContainer}>
         <TableContainer>
           <Table
             size="large"
@@ -87,8 +86,32 @@ const Coins = () => {
             </TableBody>
           </Table>
         </TableContainer>
+      </Box> */}
+        {coinData.length == 0 ? (
+          <Box className={Styles.coinPageSkeleton}>
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+          </Box>
+        ) : (
+          <Box className={Styles.coinPageBox}>
+            {
+              coinData.map((item, index) => {
+                return (
+                  <CoinCard key={index} Styles={Styles} item={item} index={index} />
+                  );
+                })
+              }
+          </Box>
+        )}
       </Box>
-    </Box>
   );
 };
 

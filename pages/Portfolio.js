@@ -40,7 +40,7 @@ const Portfolio = () => {
     <Box Box className={Styles.mainBox}>
     <Header />
     <Button variant="contained"className={Styles.backButton} onClick={backButtonHandler}><ArrowBackIcon /> &nbsp; Back</Button>
-  <Box className={Styles.tableContainer}>
+  {/* <Box className={Styles.tableContainer}>
   <TableContainer >
   <Table  size="large" aria-label="a dense table" className={Styles.PortfolioTable}>
     <TableHead>
@@ -61,6 +61,13 @@ const Portfolio = () => {
     </TableBody>
   </Table>
 </TableContainer>
+  </Box> */}
+  <Box className={Styles.portfolioMainBox}>
+    {
+      positionsArr.map((item,index) => {
+        return <PortfolioCard key={index} Styles={Styles} item={item} index={index}/>
+      })
+    }
   </Box>
 </Box> 
   )

@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Paper,
+  Skeleton,
   Table,
   TableBody,
   TableCell,
@@ -53,7 +54,7 @@ const Transactions = () => {
       >
         <ArrowBackIcon /> &nbsp; Back
       </Button>
-      <Box className={Styles.tableContainer}>
+      {/* <Box className={Styles.tableContainer}>
         <TableContainer>
           <Table
             size="large"
@@ -64,7 +65,6 @@ const Transactions = () => {
               <TableRow>
                 <TableCell align="center">Sl.No</TableCell>
                 <TableCell align="center">From</TableCell>
-                {/* <TableCell align="center">To</TableCell> */}
                 <TableCell align="center">Amount</TableCell>
                 <TableCell align="center">message</TableCell>
                 <TableCell align="center">Date</TableCell>
@@ -80,7 +80,32 @@ const Transactions = () => {
             </TableBody>
           </Table>
         </TableContainer>
-      </Box>
+      </Box> */}
+      {
+        transactionData.length == 0 ? (
+          <Box className={Styles.transactionPageSkeleton}>
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+            <Skeleton variant="rounded" className={Styles.skeleton} />
+          </Box>
+        ) : (
+          <Box className={Styles.transactionPageBox}>
+              {
+                transactionData.map((item, index) => {
+                    return <TransactionCard key={index} item={item} index={index} Styles={Styles}/>
+                })
+              }
+           </Box>
+        )
+        
+      }
     </Box>
   );
 };

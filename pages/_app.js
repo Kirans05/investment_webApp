@@ -34,14 +34,25 @@
 // export default MyApp;
 
 import supabase from "../src/Config/supaBaseClient";
-import { ThemeProvider } from "@mui/material";
-import { theme } from "../src/theme";
+import { createTheme, ThemeProvider } from "@mui/material";
+// import { theme } from "../src/theme";
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useState } from "react";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 
 function MyApp({ Component, pageProps }) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+  const theme = createTheme({
+    palette: {
+      primary: {
+        // main: "#fcba03",
+        main: "#2196f3",
+      },
+      typography: {
+        // fontFamily: ['Poppins'].join(",")
+      },
+    },
+   });
 
   return (
     <ThemeProvider theme={theme}>

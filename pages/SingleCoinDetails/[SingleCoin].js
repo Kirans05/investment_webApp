@@ -18,17 +18,14 @@ import supabase from "../../src/Config/supaBaseClient";
 import Header from "../../components/Header";
 import Styles from "../../styles/SingleCoin.module.css";
 import MuiAlert from "@mui/material/Alert";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
-
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const SingleCoin = () => {
-
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const coinId = useRouter().query.SingleCoin;
-  const router = useRouter()
+  const router = useRouter();
   const chartRef = useRef();
   const options = { style: "currency", currency: "USD" };
   const numberFormat = new Intl.NumberFormat("en-US", options);
@@ -230,7 +227,7 @@ const SingleCoin = () => {
                 handleSnackBarClick();
                 setSnackBarColor("success");
                 setSnackBarMsg("Coin SuccessFully Purchased");
-                handleModalClose()
+                handleModalClose();
                 return;
               }
             } catch (err) {}
@@ -314,64 +311,70 @@ const SingleCoin = () => {
                 {coinDetails.name}
               </Typography>
             </Box>
-            <Typography className={Styles.descriptionHeading}>
-              Description
-            </Typography>
-            <Typography className={Styles.coinDescription}>
-              {coinDetails.description.en}
-            </Typography>
-            <Typography className={Styles.coinDetailsTypography}>
-              Market cap rank{coinDetails.market_cap_rank}
-            </Typography>
-            <Typography className={Styles.coinDetailsTypography}>
-              Current price - {coinDetails.market_data.current_price.usd}
-            </Typography>
-            <Typography className={Styles.coinDetailsTypography}>
-              Market Cap - {coinDetails.market_data.market_cap.usd}
-            </Typography>
-            <Typography className={Styles.coinDetailsTypography}>
-              Price Change in 24h -{" "}
-              {
-                coinDetails.market_data.price_change_percentage_1h_in_currency
-                  .usd
-              }
-              %
-            </Typography>
-            <Typography className={Styles.coinDetailsTypography}>
-              Price Change in 1y -{" "}
-              {
-                coinDetails.market_data.price_change_percentage_1y_in_currency
-                  .usd
-              }
-              %
-            </Typography>
-            <Typography className={Styles.coinDetailsTypography}>
-              Price Change in 7d -{" "}
-              {
-                coinDetails.market_data.price_change_percentage_7d_in_currency
-                  .usd
-              }
-              %
-            </Typography>
-            <Typography className={Styles.coinDetailsTypography}>
-              Price Change in 14d -{" "}
-              {
-                coinDetails.market_data.price_change_percentage_14d_in_currency
-                  .usd
-              }
-              %
-            </Typography>
-            <Typography className={Styles.coinDetailsTypography}>
-              Price Change in 30d -{" "}
-              {
-                coinDetails.market_data.price_change_percentage_30d_in_currency
-                  .usd
-              }
-              %
-            </Typography>
-            <Typography className={Styles.coinDetailsTypography}>
-              Total Volume - {coinDetails.market_data.total_volume.usd}
-            </Typography>
+            <Box className={Styles.coinDetailsAndDescriptions}>
+              <Box className={Styles.coinDescriptionBox}>
+                <Typography className={Styles.descriptionHeading}>
+                  Description
+                </Typography>
+                <Typography className={Styles.coinDescription}>
+                  {coinDetails.description.en}
+                </Typography>
+              </Box>
+              <Box className={Styles.coinPricingdetailsBox}>
+                <Typography className={Styles.coinDetailsTypography}>
+                  Market cap rank - {coinDetails.market_cap_rank}
+                </Typography>
+                <Typography className={Styles.coinDetailsTypography}>
+                  Current price - {coinDetails.market_data.current_price.usd}
+                </Typography>
+                <Typography className={Styles.coinDetailsTypography}>
+                  Market Cap - {coinDetails.market_data.market_cap.usd}
+                </Typography>
+                <Typography className={Styles.coinDetailsTypography}>
+                  Price Change in 24h -{" "}
+                  {
+                    coinDetails.market_data
+                      .price_change_percentage_1h_in_currency.usd
+                  }
+                  %
+                </Typography>
+                <Typography className={Styles.coinDetailsTypography}>
+                  Price Change in 1y -{" "}
+                  {
+                    coinDetails.market_data
+                      .price_change_percentage_1y_in_currency.usd
+                  }
+                  %
+                </Typography>
+                <Typography className={Styles.coinDetailsTypography}>
+                  Price Change in 7d -{" "}
+                  {
+                    coinDetails.market_data
+                      .price_change_percentage_7d_in_currency.usd
+                  }
+                  %
+                </Typography>
+                <Typography className={Styles.coinDetailsTypography}>
+                  Price Change in 14d -{" "}
+                  {
+                    coinDetails.market_data
+                      .price_change_percentage_14d_in_currency.usd
+                  }
+                  %
+                </Typography>
+                <Typography className={Styles.coinDetailsTypography}>
+                  Price Change in 30d -{" "}
+                  {
+                    coinDetails.market_data
+                      .price_change_percentage_30d_in_currency.usd
+                  }
+                  %
+                </Typography>
+                <Typography className={Styles.coinDetailsTypography}>
+                  Total Volume - {coinDetails.market_data.total_volume.usd}
+                </Typography>
+              </Box>
+            </Box>
             <Button
               variant="contained"
               // onClick={investHandler}

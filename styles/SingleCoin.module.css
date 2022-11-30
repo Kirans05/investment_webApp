@@ -1,7 +1,7 @@
 .mainBox {
     display: flex;
     flex-direction: column;
-    row-gap: 40px;
+    row-gap: 20px;
 }
 
 .coinDetailsMainPage {
@@ -39,7 +39,9 @@
 
 
 .coinImageAndName .coinImage {
-    width: 10%;
+    /* width: 10%; */
+    min-width: 5%;
+    max-width: 5%;
 }
 
 .coinName{
@@ -51,7 +53,7 @@
 }
 
 .coinDescription {
-    font-size: 20px;
+    font-size: 17px;
 }
 
 .coinInformation{
@@ -62,13 +64,15 @@
 }
 
 .coinDetailsTypography {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .coinInformation .investmentbutton {
     background-color: green;
     margin-top: 20px;
     align-self:center;
+    width: 30%;
+    border-radius: 30px;
 }
 
 
@@ -96,13 +100,40 @@
     background-color: #c8cfca;
     color: black;
     border-radius: 20px;
+    margin-left: 30px;
   }
   
   .backButton:hover{
-    background-color: red;
     color: white;
+    background-color: red;
   }
 
+.coinInformation .coinDetailsAndDescriptions {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+}
+
+
+.coinInformation .coinDetailsAndDescriptions .coinDescriptionBox {
+    width: 66%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    padding: 1% 2%;
+}
+
+
+.coinInformation .coinDetailsAndDescriptions .coinPricingdetailsBox{
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    padding: 4% 5%;
+    border-radius: 30px;
+    background-color: #f3f4f6;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
 
 @media (min-width:0px) and (max-width:480px){
     .coinName{
@@ -126,6 +157,35 @@
         left: 3%;
         top: 25%;
     }
+
+    .backButton{
+        margin-left: 10px;
+    }
+
+    .coinInformation .coinDetailsAndDescriptions {
+        flex-direction: column;
+        row-gap: 30px;
+    }
+
+    .coinInformation .coinDetailsAndDescriptions .coinDescriptionBox {
+        width: 100%;
+        padding: 1% 0%;
+    }
+
+    .coinInformation .coinDetailsAndDescriptions .coinPricingdetailsBox{
+        width: 90%;
+    }
+
+    .coinInformation .investmentbutton {
+        width: 100%;
+    }
+
+    .coinImageAndName .coinImage {
+        /* width: 10%; */
+        min-width: 20%;
+        max-width: 20%;
+    }
+
 }
 
 @media (min-width:481px) and (max-width:768px){
@@ -149,6 +209,34 @@
         width: 70%;
         left: 15%;
         top: 25%;
+    }
+
+    .backButton{
+        margin-left: 10px;
+    }
+
+    .coinInformation .coinDetailsAndDescriptions {
+        flex-direction: column;
+        row-gap: 30px;
+    }
+
+    .coinInformation .coinDetailsAndDescriptions .coinDescriptionBox {
+        width: 100%;
+        padding: 1% 0%;
+    }
+
+    .coinInformation .coinDetailsAndDescriptions .coinPricingdetailsBox{
+        width: 90%;
+    }
+
+    .coinInformation .investmentbutton {
+        width: 100%;
+    }
+
+    .coinImageAndName .coinImage {
+        /* width: 10%; */
+        min-width: 15%;
+        max-width: 15%;
     }
 }
 
