@@ -115,6 +115,13 @@ const Header = ({indexPageRrender, setIndexPageRerender}) => {
         >
           Show Assets
         </Typography>
+        <Typography
+          className={Styles.drawerTypograpy}
+          onClick={() => router.push("Assets")}
+          sx={{ display: userExist == true ? "flex" : "none" }}
+        >
+          Basket
+        </Typography>
         {/* <Typography
           className={Styles.drawerTypograpy}
           onClick={() => router.push("Positions")}
