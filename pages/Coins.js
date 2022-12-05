@@ -43,7 +43,12 @@ const Coins = () => {
   };
 
   useEffect(() => {
-    fetchCryptoCoins();
+    // call api after 10s
+    // setInterval(() => {
+    //   fetchCryptoCoins();
+    // },10000)
+    
+    fetchCryptoCoins()
   }, []);
 
   return (
